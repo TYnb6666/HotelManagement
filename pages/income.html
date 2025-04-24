@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Finance Management System</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<div id="header-container"></div>  <!-- load header -->
+<div id="sidebar-container"></div>  <!-- load sidebar -->
+
+<main class="content">
+    <h2 class="block-elem-quote">Income</h2>
+    <div class="table_container">
+        <table>
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Description</th>
+            </tr>
+            </thead>
+            <tbody id="income-table-body"></tbody>
+        </table>
+    </div>
+    <canvas id="incomePieChart" class="chart-container"></canvas>
+    <script>
+        fetch('../data/data.json')
+            .then(res => res.json())
+            .then(data => {
+                const incomeData = data.income;
+                const grouped = {};
+
+                incomeData.forEach(item => {
+                    grouped[item.category] = (grouped[item.category] || 0) + item.amount;
+                });
+
+                const labels = Object.keys(grouped);
+                const values = Object.values(grouped);
+
+                new Chart(document.getElementById("incomePieChart"), {
+                    type: 'pie',
+                    data: {
+                        labels,
+                        datasets: [{
+                            data: values,
+                            backgroundColor: ['#4caf50', '#2196f3', '#ff9800']
+                        }]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                });
+            });
+    </script>
+
+    <canvas id="incomeLineChart"></canvas>
+    <script>
+        fetch('../data/data.json')
+            .then(res => res.json())
+            .then(data => {
+                const income = data.income;
+
+                const dateMap = {};
+                income.forEach(item => {
+                    dateMap[item.date] = (dateMap[item.date] || 0) + item.amount;
+                });
+
+                const labels = Object.keys(dateMap).sort();  // 日期升序
+                const values = labels.map(date => dateMap[date]);
+
+                new Chart(document.getElementById("incomeLineChart"), {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets: [{
+                            label: 'Daily Income',
+                            data: values,
+                            borderColor: '#4caf50',
+                            fill: false
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    </script>
+
+
+</main>
+
+<script src="../js/script.js"></script>
+<script src="../js/loadData.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

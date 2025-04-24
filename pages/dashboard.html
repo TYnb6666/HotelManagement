@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div id="header-container"></div>  <!-- load header -->
+    <div id="sidebar-container"></div>  <!-- load sidebar -->
+<main class="content">
+
+<div class="dashboard-summary block-elem-quote">
+    <h2>Today's Financial Summary (April 5, 2025)</h2>
+    <table id="finance-table">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+</div>
+    <div class="chart-container">
+        <canvas id="financePieChart"></canvas>
+    </div>
+
+</main>
+
+
+<script src="../js/loadData.js"></script>
+<script src="../js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>
