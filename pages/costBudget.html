@@ -2,9 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Cost Budget</title>
 </head>
 <body>
+<div id="header-container"></div>  <!-- load header -->
+<div id="sidebar-container"></div>  <!-- load sidebar -->
 
+<main class="content">
+    <h2 class="block-elem-quote">Budget Settings</h2>
+    <div class="table_container">
+        <table>
+            <thead>
+            <tr>
+                <th>Category</th>
+                <th>Target ($)</th>
+                <th>Current ($)</th>
+                <th>Progress</th>
+            </tr>
+            </thead>
+            <tbody id="expense-table">
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modify Target Button -->
+    <div style="text-align: center; margin-top: 20px">
+        <button id="modifyBudgetBtn">Modify Budget</button>
+    </div>
+        <!-- Modal Popup -->
+    <div id="targetModal"
+         style="display:none; position:fixed; top:30%; left:50%; transform:translate(-50%, -30%); background:white; padding:20px; border:1px solid #ccc; box-shadow:0 0 10px rgba(0,0,0,0.3); z-index:1000;">
+        <h3>Modify Targets</h3>
+        <label>Salaries: <input type="number" id="salaryInput"></label><br><br>
+        <label>Utilities: <input type="number" id="utilityInput"></label><br><br>
+        <label>Maintenance: <input type="number" id="maintenanceInput"></label><br><br>
+        <label>Supplies: <input type="number" id="supplyInput"></label><br><br>
+        <label>Marketing: <input type="number" id="marketingInput"></label><br><br>
+        <button id="confirmBtn">Confirm</button>
+        <button onclick="document.getElementById('targetModal').style.display='none'">Cancel</button>
+    </div>
+
+</main>
+<script src="../js/script.js"></script>
+<script src="../js/costBudget.js"></script>
 </body>
 </html>
