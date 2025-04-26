@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Budget Control</title>
+</head>
+<body>
+<div id="header-container"></div> <!-- load header -->
+<div id="sidebar-container"></div> <!-- load sidebar -->
+
+<main class="content">
+
+    <!-- Income Goal Settings -->
+    <h2 class="block-elem-quote">Income Goal Settings</h2>
+    <div class="table_container">
+        <table>
+            <thead>
+            <tr>
+                <th>Business</th>
+                <th>Target ($)</th>
+                <th>Current ($)</th>
+                <th>Progress</th>
+            </tr>
+            </thead>
+            <tbody id="budget-table"></tbody>
+        </table>
+    </div>
+    <div style="text-align: center; margin-top: 20px">
+        <button id="modifyIncomeBtn">Modify Income Target</button>
+    </div>
+
+    <!-- Divider -->
+    <hr style="margin: 40px 0;">
+
+    <!-- Expense Budget Settings -->
+    <h2 class="block-elem-quote">Expense Budget Settings</h2>
+    <div class="table_container">
+        <table>
+            <thead>
+            <tr>
+                <th>Category</th>
+                <th>Budget ($)</th>
+                <th>Current ($)</th>
+                <th>Progress</th>
+            </tr>
+            </thead>
+            <tbody id="expense-table"></tbody>
+        </table>
+    </div>
+    <div style="text-align: center; margin-top: 20px">
+        <button id="modifyExpenseBtn">Modify Expense Budget</button>
+    </div>
+
+    <!-- Income Modal -->
+    <div id="incomeModal"
+         style="display:none; position:fixed; top:30%; left:50%; transform:translate(-50%, -30%); background:white; padding:20px; border:1px solid #ccc; box-shadow:0 0 10px rgba(0,0,0,0.3); z-index:1000;">
+        <h3>Modify Income Targets</h3>
+        <label>Hotel: <input type="number" id="hotelInput"></label><br><br>
+        <label>Restaurant: <input type="number" id="restaurantInput"></label><br><br>
+        <label>Entertainment: <input type="number" id="entertainmentInput"></label><br><br>
+        <button id="confirmIncomeBtn">Confirm</button>
+        <button onclick="document.getElementById('incomeModal').style.display='none'">Cancel</button>
+    </div>
+
+    <!-- Expense Modal -->
+    <div id="expenseModal"
+         style="display:none; position:fixed; top:30%; left:50%; transform:translate(-50%, -30%); background:white; padding:20px; border:1px solid #ccc; box-shadow:0 0 10px rgba(0,0,0,0.3); z-index:1000;">
+        <h3>Modify Expense Budgets</h3>
+        <label>Salaries: <input type="number" id="salaryInput"></label><br><br>
+        <label>Utilities: <input type="number" id="utilityInput"></label><br><br>
+        <label>Maintenance: <input type="number" id="maintenanceInput"></label><br><br>
+        <label>Supplies: <input type="number" id="supplyInput"></label><br><br>
+        <label>Marketing: <input type="number" id="marketingInput"></label><br><br>
+        <button id="confirmExpenseBtn">Confirm</button>
+        <button onclick="document.getElementById('expenseModal').style.display='none'">Cancel</button>
+    </div>
+
+</main>
+
+<script src="../js/script.js"></script>
+<script src="../js/budgetControl.js"></script>
+
+</body>
+</html>
