@@ -43,6 +43,7 @@ fetch('../data/data.json')
 
         renderIncomeTable();
         renderExpenseTable();
+        calculateProfit();
     })
     .catch(error => {
         console.error('Error loading data:', error);
@@ -149,6 +150,7 @@ document.getElementById('confirmIncomeBtn').onclick = () => {
     businessGoals["Entertainment"] = parseFloat(document.getElementById('entertainmentInput').value);
     document.getElementById('incomeModal').style.display = 'none';
     renderIncomeTable();
+    calculateProfit();
 };
 
 // 修改支出
@@ -169,4 +171,49 @@ document.getElementById('confirmExpenseBtn').onclick = () => {
     expenseBudget["Marketing"] = parseFloat(document.getElementById('marketingInput').value);
     document.getElementById('expenseModal').style.display = 'none';
     renderExpenseTable();
+    calculateProfit();
 };
+
+let profitChart;
+
+function calculateProfit() {
+    const estimatedIncomeTotal = Object.values(businessGoals).reduce((a, b) => a + b, 0);
+    const estimatedExpenseTotal = Object.values(expenseBudget).reduce((a, b) => a + b, 0);
+    const actualIncomeTotal = Object.values(businessCurrent).reduce((a, b) => a + b, 0);
+    const actualExpenseTotal = Object.values(expenseCurrent).reduce((a, b) => a + b, 0);
+
+    const profitGoal = estimatedIncomeTotal - estimatedExpenseTotal;
+    const actualProfit = actualIncomeTotal - actualExpenseTotal;
+
+    document.getElementById('profitGoalValue').textContent = profitGoal.toFixed(2);
+    document.getElementById('actualProfitValue').textContent = actualProfit.toFixed(2);
+    // 创建并渲染条形图
+    const ctx = document.getElementById('profitChart').getContext('2d');
+    if (profitChart) {
+        profitChart.data.datasets[0].data = [profitGoal, actualProfit];  // 更新数据
+        profitChart.update();  // 更新图表
+    } else {
+        // 如果图表不存在，创建并渲染
+        const ctx = document.getElementById('profitChart').getContext('2d');
+        profitChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Profit Goal', 'Actual Profit'],
+                datasets: [{
+                    label: 'Profit ($)',
+                    data: [profitGoal, actualProfit],
+                    backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                    borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+}
