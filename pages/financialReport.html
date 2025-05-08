@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Financial Report Center</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<div id="header-container"></div> <!-- load header -->
+<div id="sidebar-container"></div> <!-- load sidebar -->
+
+<main class="content">
+    <h2 class="block-elem-quote">Fast View</h2>
+    <!-- Month Picker -->
+    <div style="text-align:center; margin-top:20px;">
+        <label for="monthPicker">Select Month:</label>
+        <input type="month" id="monthPicker" value="2025-04">
+        <button id="applyMonth">Apply</button>
+    </div>
+    <!-- Overview Cards -->
+    <section class="overview">
+        <div class="card">Income<br>$<span id="totalIncome">0</span></div>
+        <div class="card">Expenses<br>$<span id="totalExpenses">0</span></div>
+        <div class="card">Profit<br>$<span id="totalProfit">0</span></div>
+        <div class="card">Profit Rate (%)<br>$<span id="profitRate">0</span></div>
+    </section>
+
+    <hr style="margin: 40px 0;">
+    <!-- Trend Charts -->
+
+    <h2 class="block-elem-quote">Income vs Expenses Trend</h2>
+    <canvas id="incomeExpenseChart"></canvas>
+    <hr style="margin: 40px 0;">
+    <h2 class="block-elem-quote">Profit Trend</h2>
+    <canvas id="profitTrendChart"></canvas>
+    <hr style="margin: 40px 0;">
+    <h2 class="block-elem-quote">Current Month vs Previous Month</h2>
+    <canvas id="compareChart"></canvas>
+
+</main>
+
+<script src="../js/script.js"></script>
+<script src="../js/financialReport.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

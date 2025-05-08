@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tax Management</title>
+</head>
+<body>
+<div id="header-container"></div> <!-- load header -->
+<div id="sidebar-container"></div> <!-- load sidebar -->
+
+<main class="content">
+    <h2 class="block-elem-quote">Overview</h2>
+    <section class="overview">
+        <div class="card">Total Tax<br>$<span id="totalTax">0</span></div>
+        <div class="card">VAT<br>$<span id="vatTax">0</span></div>
+        <div class="card">Consumption Tax<br>$<span id="consumptionTax">0</span></div>
+        <div class="card">Income Tax<br>$<span id="incomeTax">0</span></div>
+    </section>
+
+    <hr style="margin: 40px 0;">
+
+    <h2 class="block-elem-quote">Tax Detail</h2>
+    <div class="table_container">
+        <table>
+            <thead>
+            <tr>
+                <th>Tax Type</th>
+                <th>Amount ($)</th>
+                <th>Rate (%)</th>
+                <th>Based On</th>
+            </tr>
+            </thead>
+            <tbody id="tax-table"></tbody>
+        </table>
+    </div>
+
+
+    <hr style="margin: 40px 0;">
+
+    <h2 class="block-elem-quote">Tax Composition</h2>
+    <canvas id="taxChart"></canvas>
+</main>
+
+<script src="../js/script.js"></script>
+<script src="../js/taxManagement.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+</body>
+</html>

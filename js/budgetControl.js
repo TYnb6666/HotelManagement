@@ -1,15 +1,15 @@
 let businessGoals = {
-    "Hotel": 30000,
-    "Restaurant": 30000,
-    "Entertainment": 30000
+    "Hotel": 300000,
+    "Restaurant": 150000,
+    "Entertainment": 200000
 };
 
 let expenseBudget = {
-    "Salaries": 30000,
-    "Utilities": 30000,
+    "Salaries": 120000,
+    "Utilities": 80000,
     "Maintenance": 30000,
-    "Supplies": 30000,
-    "Marketing": 30000
+    "Supplies": 60000,
+    "Marketing": 100000
 };
 
 let businessCurrent = {};
