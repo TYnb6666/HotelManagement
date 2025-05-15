@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 incomeTableBody.appendChild(row);
             });
         })
-        // .catch(error => console.error("Error loading data:", error));
+    // .catch(error => console.error("Error loading data:", error));
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // 加标记，收入 type 为 "income"，支出为 "expense"
             const transactions = [
-                ...data.income.map(item => ({ ...item, type: "income" })),
-                ...data.expenses.map(item => ({ ...item, type: "expense" }))
+                ...data.income.map(item => ({...item, type: "income"})),
+                ...data.expenses.map(item => ({...item, type: "expense"}))
             ];
 
             const filtered = transactions.filter(item => item.date === targetDate);
@@ -89,28 +89,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const totalIncome = incomeData.reduce((sum, item) => sum + item.amount, 0);
             const totalExpenses = expenseData.reduce((sum, item) => sum + item.amount, 0);
-            /*绘制饼图*/
-            const ctx = document.getElementById("financePieChart").getContext("2d");
-            new Chart(ctx, {
-                type: "pie",
-                data: {
-                    labels: ["Income", "Expenses"],
-                    datasets: [{
-                        data: [totalIncome, totalExpenses],
-                        backgroundColor: ["#4CAF50", "#F44336"],
-                        hoverOffset: 10
-                    }]
+            // draw pie chart using echarts
+            const chartDom = document.getElementById('financePieChart');
+            const myChart = echarts.init(chartDom);
+            const option = {
+                title: {
+                    text: "Today's Financial Overview",
+                    left: "center"
                 },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: "Today's Financial Overview"
-                        }
+                tooltip: {
+                    trigger: 'item'
+                },
+                series: {
+                    name:'amount',
+                    type:'pie',
+                    radius:'60%',
+                    data:[
+                        {value:totalIncome, name:'Total Income'},
+                        {value:totalExpenses, name:'Total Expense'}
+                    ]
+                },
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
                     }
                 }
-            });
+            };
+            myChart.setOption(option);
         })
         .catch(error => console.error("Error loading pie chart data:", error));
 });

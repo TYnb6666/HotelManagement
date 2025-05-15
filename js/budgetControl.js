@@ -1,16 +1,18 @@
-let businessGoals = {
-    "Hotel": 300000,
-    "Restaurant": 150000,
-    "Entertainment": 200000
+// default goal and budget (read from local storage first)
+let businessGoals = JSON.parse(localStorage.getItem('incomeGoals')) || {
+  "Hotel": 30000,
+  "Restaurant": 30000,
+  "Entertainment": 30000
 };
 
-let expenseBudget = {
-    "Salaries": 120000,
-    "Utilities": 80000,
-    "Maintenance": 30000,
-    "Supplies": 60000,
-    "Marketing": 100000
+let expenseBudget = JSON.parse(localStorage.getItem('expenseGoals')) || {
+  "Salaries": 30000,
+  "Utilities": 30000,
+  "Maintenance": 30000,
+  "Supplies": 30000,
+  "Marketing": 30000
 };
+
 
 let businessCurrent = {};
 let expenseCurrent = {};
@@ -148,6 +150,7 @@ document.getElementById('confirmIncomeBtn').onclick = () => {
     businessGoals["Hotel"] = parseFloat(document.getElementById('hotelInput').value);
     businessGoals["Restaurant"] = parseFloat(document.getElementById('restaurantInput').value);
     businessGoals["Entertainment"] = parseFloat(document.getElementById('entertainmentInput').value);
+    localStorage.setItem('incomeGoals', JSON.stringify(businessGoals)); //save to local storage
     document.getElementById('incomeModal').style.display = 'none';
     renderIncomeTable();
     calculateProfit();
@@ -169,6 +172,7 @@ document.getElementById('confirmExpenseBtn').onclick = () => {
     expenseBudget["Maintenance"] = parseFloat(document.getElementById('maintenanceInput').value);
     expenseBudget["Supplies"] = parseFloat(document.getElementById('supplyInput').value);
     expenseBudget["Marketing"] = parseFloat(document.getElementById('marketingInput').value);
+    localStorage.setItem('expenseGoals', JSON.stringify(expenseBudget));
     document.getElementById('expenseModal').style.display = 'none';
     renderExpenseTable();
     calculateProfit();
@@ -177,6 +181,7 @@ document.getElementById('confirmExpenseBtn').onclick = () => {
 let profitChart;
 
 function calculateProfit() {
+    //TODO: 条形图修改为echarts
     const estimatedIncomeTotal = Object.values(businessGoals).reduce((a, b) => a + b, 0);
     const estimatedExpenseTotal = Object.values(expenseBudget).reduce((a, b) => a + b, 0);
     const actualIncomeTotal = Object.values(businessCurrent).reduce((a, b) => a + b, 0);
