@@ -40,6 +40,7 @@ function updateOverview(month) {
 }
 
 function drawIncomeExpenseTrend() {
+    //TODO: 支出折线图修改为echarts
     if (incomeExpenseChart) incomeExpenseChart.destroy();
 
     const months = getUniqueMonths();
@@ -60,6 +61,7 @@ function drawIncomeExpenseTrend() {
 }
 
 function drawProfitTrend() {
+    //TODO: 利润折线图修改为echarts
     if (profitTrendChart) profitTrendChart.destroy();
 
     const months = getUniqueMonths();
@@ -79,6 +81,7 @@ function drawProfitTrend() {
 }
 
 function drawMonthComparison(selectedMonth) {
+    //TODO: 月份比较折线图修改为echarts
     if (compareChart) compareChart.destroy();
 
     const prevMonth = getPreviousMonth(selectedMonth);
