@@ -40,8 +40,21 @@ function initializeUIComponents() {
     const toggleBtn = document.getElementById('sidebar-toggle-btn');
     const content = document.querySelector('.content'); // 主页面内容区域
 
-    // 1. 侧边栏收缩功能
-    if (toggleBtn && sidebar) {
+    if (!sidebar) {
+        console.warn('Sidebar element not found after loading.');
+        // 如果没有sidebar，后续依赖sidebar的逻辑也不应执行
+        return; 
+    }
+
+    // 手机端侧边栏默认隐藏
+    if (window.innerWidth <= 768) {
+        sidebar.classList.add('hidden');
+        if (content) {
+            content.classList.add('full');
+        }
+    }
+
+    if (toggleBtn) {
         toggleBtn.addEventListener('click', function() {
             sidebar.classList.toggle('hidden');
             if (content) {
@@ -49,7 +62,7 @@ function initializeUIComponents() {
             }
         });
     } else {
-        console.warn('Sidebar toggle button or sidebar element not found after loading.');
+        console.warn('Sidebar toggle button not found after loading.');
     }
 
     // 2. 下拉菜单功能
@@ -77,34 +90,23 @@ function initializeUIComponents() {
 
     // 3. 移动端响应式调整 (确保sidebar和content在调用时已存在)
     function checkMobile() {
-        if (!sidebar) return; // 如果sidebar不存在，则不执行
+        if (!content) return; // 如果content不存在，则不执行
 
-        // 手机端，如果sidebar是可见的，按钮点击时依然可以切换隐藏/显示
-        // 此处不再强制移除hidden类，让按钮完全控制显示/隐藏
-
-        if (content) { // 确保content元素存在
-            if (sidebar.classList.contains('hidden')) {
-                content.classList.add('full');
+        if (sidebar.classList.contains('hidden')) {
+            content.classList.add('full');
+        } else {
+            if (window.innerWidth > 768) {
+                content.classList.remove('full');
             } else {
-                 // 如果不是移动端，且sidebar可见，内容区应有margin
-                if (window.innerWidth > 768) {
-                    content.classList.remove('full');
-                } else {
-                // 移动端，sidebar可见时，内容区也应该是full (因为sidebar通常是overlay或占据全部宽度后推开内容)
-                // 但根据我们当前的CSS，移动端sidebar是fixed的，不推内容区，所以内容区应该总是full
-                    content.classList.add('full');
-                }
+                content.classList.add('full'); // 移动端sidebar可见时，content也应是full
             }
         }
     }
 
     window.addEventListener('resize', checkMobile);
-    checkMobile(); // 初始检查
-
-    // 初始状态检查：如果sidebar是hidden，确保content是full
-    if (sidebar && content && sidebar.classList.contains('hidden')){
-        content.classList.add('full');
-    }
+    // 初始检查，确保 content class 正确
+    // 这会在手机端默认隐藏后，以及桌面端初始加载时正确设置 content class
+    checkMobile(); 
 }
 
 
