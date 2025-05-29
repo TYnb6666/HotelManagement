@@ -162,7 +162,6 @@ table, th, td {
 th, td {
     padding: 10px;
     text-align: center;
-    /* word-break: break-word; */
 }
 
 th {
@@ -171,25 +170,50 @@ th {
 
 .table_container {
     max-height: 400px;
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: auto;
     border: 1px solid #ddd;
     padding: 10px;
-    overflow-x: auto;
+    background: #fff;
 }
 
-/* 图表样式 chart style */
+.table_container table {
+    min-width: 600px;
+}
+
+/* chart style */
 .chart-container {
-    width: 400px;
-    height: 400px;
-    margin: 0 auto; /* 居中 */
+    width: 100%;
+    max-width: 500px;
+    height: auto;
+    margin: 20px auto;
+    padding: 10px;
 }
 
-.chart-container canvas {
-    width: 100% !important;
-    height: 100% !important;
+.chart-container canvas,
+.chart-container [id*="Chart"],
+.chart-container [id*="chart"] {
+    width: 400px !important;
+    height: 400px !important;
+    margin: 0 auto;
 }
 
-/* 进度条 progress bar */
+
+#financePieChart,
+#incomePieChart,
+#incomeLineChart,
+#expensePieChart,
+#expenseLineChart,
+#incomeExpenseChart,
+#profitTrendChart,
+#compareChart,
+#profitChart {
+    width: 80%;
+    height: 500px;
+    margin: 0 auto;
+}
+
+/* progress bar */
 .progress-bar {
     width: 100%;
     height: 20px;
@@ -214,7 +238,7 @@ th {
 
 #taxChart { width: 80%; height: 500px; margin: 0 auto; }
 
-/* 导航菜单样式 navigation menu style */
+/* navigation menu style */
 .nav-list li {
     margin: 10px 0;
 }
@@ -325,8 +349,15 @@ th {
         padding-left: 20px !important;
     }
     .chart-container {
-        width: 100%;
-        height: auto;
+        padding: 5px;
+        max-width: 100%;
+    }
+    .chart-container canvas,
+    .chart-container [id*="Chart"],
+    .chart-container [id*="chart"] {
+        width: 400px !important;
+        height: 400px !important;
+        margin: 0 auto;
     }
     .overview {
         flex-direction: column;
@@ -337,12 +368,38 @@ th {
         margin-bottom: 15px;
     }
     .table_container {
-        max-height: none;
-        overflow: auto;
+        max-height: 250px;
+        overflow-y: auto;
+        overflow-x: auto;
+    }
+    .table_container table {
+        min-width: 600px;
     }
     #taxChart {
         width: 100%;
         height: auto;
+    }
+    #financePieChart,
+    #incomePieChart,
+    #incomeLineChart,
+    #expensePieChart,
+    #expenseLineChart,
+    #incomeExpenseChart,
+    #profitTrendChart,
+    #compareChart,
+    #profitChart {
+        width: 100%;
+        height: auto;
+    }
+    .tax-detail-scroll {
+        max-height: 250px;
+        overflow-y: auto;
+        overflow-x: auto;
+        border: 1px solid #ddd;
+        background: #fff;
+    }
+    .tax-detail-scroll table {
+        min-width: 600px;
     }
 }
 

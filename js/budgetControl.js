@@ -20,14 +20,14 @@ let expenseCurrent = {};
 const incomeTableBody = document.getElementById('budget-table');
 const expenseTableBody = document.getElementById('expense-table');
 
-// 加载数据
+// 加载数据 load data
 fetch('../data/data.json')
     .then(response => response.json())
     .then(data => {
         const incomeData = data.income;
         const expensesData = data.expenses;
 
-        // 计算收入
+        // 计算收入 calculate income
         incomeData.forEach(entry => {
             if (!businessCurrent[entry.category]) {
                 businessCurrent[entry.category] = 0;
@@ -35,7 +35,7 @@ fetch('../data/data.json')
             businessCurrent[entry.category] += entry.amount;
         });
 
-        // 计算支出
+        // 计算支出 calculate expenses
         expensesData.forEach(entry => {
             if (!expenseCurrent[entry.category]) {
                 expenseCurrent[entry.category] = 0;
@@ -51,7 +51,7 @@ fetch('../data/data.json')
         console.error('Error loading data:', error);
     });
 
-// 渲染收入表
+// 渲染收入表 render income table
 function renderIncomeTable() {
     incomeTableBody.innerHTML = '';
     Object.keys(businessGoals).forEach(category => {
@@ -80,7 +80,7 @@ function renderIncomeTable() {
         const percentage = Math.min((current / businessGoals[category]) * 100, 100);
         fill.style.width = percentage + '%';
         fill.style.backgroundColor = percentage >= 100 ? 'blue' : 'green';
-        fill.textContent = Math.round(percentage) + '%'; // ★ 在这里加上百分比文字
+        fill.textContent = Math.round(percentage) + '%'; // 加上百分比文字 add percentage text
         fill.style.textAlign = 'center';
         fill.style.color = 'white';
         fill.style.fontSize = '12px';
@@ -95,7 +95,7 @@ function renderIncomeTable() {
 }
 
 
-// 渲染支出表
+// 渲染支出表 render expense table
 function renderExpenseTable() {
     expenseTableBody.innerHTML = '';
     Object.keys(expenseBudget).forEach(category => {
@@ -138,7 +138,7 @@ function renderExpenseTable() {
     });
 }
 
-// 修改收入
+// 修改收入 modify income
 document.getElementById('modifyIncomeBtn').onclick = () => {
     document.getElementById('hotelInput').value = businessGoals["Hotel"];
     document.getElementById('restaurantInput').value = businessGoals["Restaurant"];
@@ -156,7 +156,7 @@ document.getElementById('confirmIncomeBtn').onclick = () => {
     calculateProfit();
 };
 
-// 修改支出
+// 修改支出 modify expenses
 document.getElementById('modifyExpenseBtn').onclick = () => {
     document.getElementById('salaryInput').value = expenseBudget["Salaries"];
     document.getElementById('utilityInput').value = expenseBudget["Utilities"];
@@ -178,10 +178,82 @@ document.getElementById('confirmExpenseBtn').onclick = () => {
     calculateProfit();
 };
 
-let profitChart;
+let profitChartInstance = null; // To store ECharts instance for profitChart
 
-function calculateProfit() {
-    //TODO: 条形图修改为echarts
+// Helper to initialize or update ECharts instance
+function initOrUpdateProfitChart(profitGoal, actualProfit) {
+    const chartDom = document.getElementById('profitChart');
+    if (!chartDom) {
+        console.warn('Profit chart DOM element not found.');
+        return;
+    }
+
+    if (!profitChartInstance) {
+        profitChartInstance = echarts.init(chartDom);
+        window.addEventListener('resize', function() {
+            if (profitChartInstance) {
+                profitChartInstance.resize();
+            }
+        });
+    }
+
+    const option = {
+        title: {
+            text: 'Profit Goal vs Actual Profit',
+            left: 'center',
+            textStyle: { fontSize: 16 }
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: { type: 'shadow' }
+        },
+        legend: {
+            data: ['Profit Goal', 'Actual Profit'],
+            top: 30
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'category',
+            data: ['Comparison'] // Single category for side-by-side bars
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: 'Profit Goal',
+                type: 'bar',
+                barGap: 0, // No gap between bars of the same category index
+                emphasis: { focus: 'series' },
+                data: [profitGoal],
+                itemStyle: { color: 'GreenYellow' } // Light green
+            },
+            {
+                name: 'Actual Profit',
+                type: 'bar',
+                emphasis: { focus: 'series' },
+                data: [actualProfit],
+                itemStyle: { color: 'DarkGreen' } // Darker green
+            }
+        ]
+    };
+    profitChartInstance.setOption(option, true);
+}
+
+function calculateProfitAndRenderChart() {
+    // These variables need to be defined and populated based on your application logic
+    // For example, loaded from localStorage or another data source.
+    // Using placeholder values for demonstration if they are not globally available.
+    const businessGoals = JSON.parse(localStorage.getItem('businessGoals')) || { Hotel: 20000, Restaurant: 15000, Entertainment: 5000 };
+    const expenseBudget = JSON.parse(localStorage.getItem('expenseGoals')) || { Salaries: 8000, Utilities: 3000, Maintenance: 2000, Supplies: 1500, Marketing: 1000 };
+    const businessCurrent = JSON.parse(localStorage.getItem('businessCurrent')) || { Hotel: 18000, Restaurant: 12000, Entertainment: 6000 };
+    const expenseCurrent = JSON.parse(localStorage.getItem('expenseCurrent')) || { Salaries: 7500, Utilities: 2800, Maintenance: 2200, Supplies: 1300, Marketing: 900 };
+
     const estimatedIncomeTotal = Object.values(businessGoals).reduce((a, b) => a + b, 0);
     const estimatedExpenseTotal = Object.values(expenseBudget).reduce((a, b) => a + b, 0);
     const actualIncomeTotal = Object.values(businessCurrent).reduce((a, b) => a + b, 0);
@@ -190,35 +262,43 @@ function calculateProfit() {
     const profitGoal = estimatedIncomeTotal - estimatedExpenseTotal;
     const actualProfit = actualIncomeTotal - actualExpenseTotal;
 
-    document.getElementById('profitGoalValue').textContent = profitGoal.toFixed(2);
-    document.getElementById('actualProfitValue').textContent = actualProfit.toFixed(2);
-    // 创建并渲染条形图
-    const ctx = document.getElementById('profitChart').getContext('2d');
-    if (profitChart) {
-        profitChart.data.datasets[0].data = [profitGoal, actualProfit];  // 更新数据
-        profitChart.update();  // 更新图表
-    } else {
-        // 如果图表不存在，创建并渲染
-        const ctx = document.getElementById('profitChart').getContext('2d');
-        profitChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Profit Goal', 'Actual Profit'],
-                datasets: [{
-                    label: 'Profit ($)',
-                    data: [profitGoal, actualProfit],
-                    backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)'],
-                    borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    }
+    const profitGoalValueEl = document.getElementById('profitGoalValue');
+    const actualProfitValueEl = document.getElementById('actualProfitValue');
+
+    if (profitGoalValueEl) profitGoalValueEl.textContent = profitGoal.toFixed(2);
+    if (actualProfitValueEl) actualProfitValueEl.textContent = actualProfit.toFixed(2);
+
+    initOrUpdateProfitChart(profitGoal, actualProfit);
 }
+
+// Assuming other functions like renderIncomeTable, renderExpenseTable, etc., exist
+// and that they might call calculateProfitAndRenderChart() after data modification.
+
+// Initial call when the page and its ECharts script are ready
+document.addEventListener('DOMContentLoaded', function() {
+    if (typeof echarts === 'undefined') {
+        console.error('ECharts library is not loaded in budgetControl.html. Make sure to include it before budgetControl.js.');
+        return;
+    }
+    // Initial rendering of tables and chart
+    // renderIncomeTable(); // You need to call your table rendering functions
+    // renderExpenseTable();
+    calculateProfitAndRenderChart(); 
+
+    // Add event listeners for modal buttons if they modify data and need chart refresh
+    // Example:
+    // document.getElementById('confirmIncomeBtn').onclick = () => {
+    //     ... update income data ...
+    //     localStorage.setItem('businessGoals', JSON.stringify(businessGoals));
+    //     renderIncomeTable();
+    //     calculateProfitAndRenderChart();
+    // };
+    // document.getElementById('confirmExpenseBtn').onclick = () => {
+    //    ... update expense data ...
+    //    localStorage.setItem('expenseGoals', JSON.stringify(expenseBudget));
+    //    renderExpenseTable();
+    //    calculateProfitAndRenderChart();
+    // };
+});
+
+// Make sure your other functions like renderExpenseTable, etc. call calculateProfitAndRenderChart() after data changes.

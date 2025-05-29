@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Budget Control</title>
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
 <div id="header-container"></div> <!-- load header -->
@@ -78,20 +79,19 @@
     <hr style="margin: 40px 0;">
 
     <h2 class="block-elem-quote">Profit Overview</h2>
-    <div id="profitOverview" style="text-align: center;">
-        <canvas id="profitChart" width="400" height="400"></canvas>
+    <div class="chart-container">
+        <div id="profitChart"></div>
     </div>
     <div id="profitValues" style="text-align:center; margin-top:20px;">
-        <p><strong>Profit Goal: </strong>$<span id="profitGoalValue"></span></p>
-        <p><strong>Actual Profit: </strong>$<span id="actualProfitValue"></span></p>
+        <p><strong>Profit Goal: </strong>$<span id="profitGoalValue">0</span></p>
+        <p><strong>Actual Profit: </strong>$<span id="actualProfitValue">0</span></p>
     </div>
-
 
 </main>
 
 <script src="../js/script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 <script src="../js/budgetControl.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </body>
 </html>

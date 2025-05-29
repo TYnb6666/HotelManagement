@@ -22,25 +22,31 @@
         <div class="card">Income<br>$<span id="totalIncome">0</span></div>
         <div class="card">Expenses<br>$<span id="totalExpenses">0</span></div>
         <div class="card">Profit<br>$<span id="totalProfit">0</span></div>
-        <div class="card">Profit Rate (%)<br>$<span id="profitRate">0</span></div>
+        <div class="card">Profit Rate (%)<br><span id="profitRate">0</span></div>
     </section>
 
     <hr style="margin: 40px 0;">
     <!-- Trend Charts -->
 
     <h2 class="block-elem-quote">Income vs Expenses Trend</h2>
-    <canvas id="incomeExpenseChart"></canvas>
+    <div class="chart-container">
+        <div id="incomeExpenseChart"></div>
+    </div>
     <hr style="margin: 40px 0;">
     <h2 class="block-elem-quote">Profit Trend</h2>
-    <canvas id="profitTrendChart"></canvas>
+    <div class="chart-container">
+        <div id="profitTrendChart"></div>
+    </div>
     <hr style="margin: 40px 0;">
     <h2 class="block-elem-quote">Current Month vs Previous Month</h2>
-    <canvas id="compareChart"></canvas>
+    <div class="chart-container">
+        <div id="compareChart"></div>
+    </div>
 
 </main>
 
 <script src="../js/script.js"></script>
-<script src="../js/financialReport.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script src="../js/financialReport.js"></script> 
 </body>
 </html>

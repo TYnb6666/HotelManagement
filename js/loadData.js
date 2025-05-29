@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 incomeTableBody.appendChild(row);
             });
         })
-        .catch(error => console.error("Error loading data:", error));
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -37,16 +36,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 incomeTableBody.appendChild(row);
             });
         })
-    // .catch(error => console.error("Error loading data:", error));
 });
 
 document.addEventListener("DOMContentLoaded", function () {
     const financeTable = document.querySelector("#finance-table tbody");
-
-    // if (!financeTable) {
-    //     console.error("Table body not found! Check if #finance-table exists in dashboard.html.");
-    //     return;
-    // }
 
     fetch("../data/data.json")
         .then(response => response.json())
@@ -83,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     fetch("../data/data.json")
         .then(response => response.json())
         .then(data => {
-            const today = "2025-04-05"; // 你可以动态获取日期也可以写死
+            const today = "2025-04-05"; // modify date
             const incomeData = data.income.filter(item => item.date === today);
             const expenseData = data.expenses.filter(item => item.date === today);
 

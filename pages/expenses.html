@@ -25,79 +25,83 @@
         </table>
     </div>
 
-    <canvas id="incomePieChart" class="chart-container"></canvas>
-    <script>
-        fetch('../data/data.json')
-            .then(res => res.json())
-            .then(data => {
-                const expenseData = data.expenses;
-                const grouped = {};
+    <h2 class="block-elem-quote">Expense Composition</h2>
+    <div class="chart-container">
+        <div id="expensePieChart"></div>
+    </div>
 
-                expenseData.forEach(item => {
-                    grouped[item.category] = (grouped[item.category] || 0) + item.amount;
-                });
-
-                const labels = Object.keys(grouped);
-                const values = Object.values(grouped);
-
-                new Chart(document.getElementById("incomePieChart"), {
-                    type: 'pie',
-                    data: {
-                        labels,
-                        datasets: [{
-                            data: values,
-                            backgroundColor: ['#4caf50', '#2196f3', '#ff9800', '#b87eff', '#fa0348']
-                        }]
-                    },
-                    options: {
-                        responsive: true
-                    }
-                });
-            });
-    </script>
-
-    <canvas id="expenseLineChart"></canvas>
-    <script>
-        fetch('../data/data.json')
-            .then(res => res.json())
-            .then(data => {
-                const expense = data.expenses;
-
-                const dateMap = {};
-                expense.forEach(item => {
-                    dateMap[item.date] = (dateMap[item.date] || 0) + item.amount;
-                });
-
-                const labels = Object.keys(dateMap).sort();  // 日期升序
-                const values = labels.map(date => dateMap[date]);
-
-                new Chart(document.getElementById("expenseLineChart"), {
-                    type: 'line',
-                    data: {
-                        labels,
-                        datasets: [{
-                            label: 'Daily Expenses',
-                            data: values,
-                            borderColor: '#4caf50',
-                            fill: false
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            });
-    </script>
-
+    <h2 class="block-elem-quote">Expense Trend</h2>
+    <div class="chart-container">
+        <div id="expenseLineChart"></div>
+    </div>
 </main>
 
 <script src="../js/script.js"></script>
-<script src="../js/loadData.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/loadData.js"></script> <!-- Assuming loadData.js populates expense-table-body -->
+<script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('../data/data.json')
+        .then(res => res.json())
+        .then(data => {
+            const expenseData = data.expenses;
+
+            // Initialize Expense Pie Chart
+            if (document.getElementById('expensePieChart')) {
+                const pieChart = echarts.init(document.getElementById('expensePieChart'));
+                const groupedExpense = {};
+                expenseData.forEach(item => {
+                    groupedExpense[item.category] = (groupedExpense[item.category] || 0) + item.amount;
+                });
+                const pieChartOption = {
+                    title: { text: 'Expense Composition', left: 'center' },
+                    tooltip: { trigger: 'item' },
+                    legend: { orient: 'vertical', left: 'left', data: Object.keys(groupedExpense) },
+                    series: [{
+                        name: 'Expense',
+                        type: 'pie',
+                        radius: '70%',
+                        data: Object.keys(groupedExpense).map(key => ({ value: groupedExpense[key], name: key })),
+                        emphasis: {
+                            itemStyle: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0, 0, 0, 0.5)' }
+                        }
+                    }]
+                };
+                pieChart.setOption(pieChartOption);
+                window.addEventListener('resize', function() { pieChart.resize(); });
+            }
+
+            // Initialize Expense Line Chart
+            if (document.getElementById('expenseLineChart')) {
+                const lineChart = echarts.init(document.getElementById('expenseLineChart'));
+                const dailyExpense = {};
+                expenseData.forEach(item => {
+                    const date = item.date.split('T')[0]; // Simple date aggregation
+                    dailyExpense[date] = (dailyExpense[date] || 0) + item.amount;
+                });
+                const sortedDates = Object.keys(dailyExpense).sort();
+                const lineChartOption = {
+                    title: { text: 'Daily Expense Trend', left: 'center' },
+                    tooltip: { trigger: 'axis' },
+                    xAxis: {
+                        type: 'category',
+                        data: sortedDates
+                    },
+                    yAxis: { type: 'value' },
+                    series: [{
+                        name: 'Daily Expense',
+                        data: sortedDates.map(date => dailyExpense[date]),
+                        type: 'line',
+                        smooth: true,
+                        itemStyle: { color: '#ff4d4f' } // Example color for expense line
+                    }]
+                };
+                lineChart.setOption(lineChartOption);
+                window.addEventListener('resize', function() { lineChart.resize(); });
+            }
+        })
+        .catch(error => console.error('Error loading expense data or initializing charts:', error));
+});
+</script>
 </body>
 </html>
