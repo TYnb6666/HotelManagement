@@ -24,11 +24,16 @@
             <tbody id="income-table-body"></tbody>
         </table>
     </div>
+
+    <hr style="margin: 40px 0;">
+
     <h2 class="block-elem-quote">Income Composition</h2>
     <div class="chart-container">
         <div id="incomePieChart"></div>
     </div>
-    
+
+    <hr style="margin: 40px 0;">
+
     <h2 class="block-elem-quote">Income Trend</h2>
     <div class="chart-container">
         <div id="incomeLineChart"></div>
@@ -39,64 +44,68 @@
 <script src="../js/loadData.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/echarts/dist/echarts.min.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    fetch('../data/data.json')
-        .then(res => res.json())
-        .then(data => {
-            const incomeData = data.income;
-            
-            if (document.getElementById('incomePieChart')) {
-                const pieChart = echarts.init(document.getElementById('incomePieChart'));
-                const groupedIncome = {};
-                incomeData.forEach(item => {
-                    groupedIncome[item.category] = (groupedIncome[item.category] || 0) + item.amount;
-                });
-                const pieChartOption = {
-                    title: { text: 'Income Composition', left: 'center' },
-                    tooltip: { trigger: 'item' },
-                    legend: { orient: 'vertical', left: 'left' },
-                    series: [{
-                        name: 'Income',
-                        type: 'pie',
-                        radius: '70%',
-                        data: Object.keys(groupedIncome).map(key => ({ value: groupedIncome[key], name: key })),
-                        emphasis: {
-                            itemStyle: { shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0, 0, 0, 0.5)' }
-                        }
-                    }]
-                };
-                pieChart.setOption(pieChartOption);
-                window.addEventListener('resize', function() { pieChart.resize(); });
-            }
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('../data/data.json')
+            .then(res => res.json())
+            .then(data => {
+                const incomeData = data.income;
 
-            if (document.getElementById('incomeLineChart')) {
-                const lineChart = echarts.init(document.getElementById('incomeLineChart'));
-                const dailyIncome = {};
-                incomeData.forEach(item => {
-                    const date = item.date.split('T')[0];
-                    dailyIncome[date] = (dailyIncome[date] || 0) + item.amount;
-                });
-                const sortedDates = Object.keys(dailyIncome).sort();
-                const lineChartOption = {
-                    title: { text: 'Daily Income Trend', left: 'center' },
-                    tooltip: { trigger: 'axis' },
-                    xAxis: {
-                        type: 'category',
-                        data: sortedDates
-                    },
-                    yAxis: { type: 'value' },
-                    series: [{
-                        data: sortedDates.map(date => dailyIncome[date]),
-                        type: 'line',
-                        smooth: true
-                    }]
-                };
-                lineChart.setOption(lineChartOption);
-                window.addEventListener('resize', function() { lineChart.resize(); });
-            }
-        })
-        .catch(error => console.error('Error loading income data or initializing charts:', error));
-});
+                if (document.getElementById('incomePieChart')) {
+                    const pieChart = echarts.init(document.getElementById('incomePieChart'));
+                    const groupedIncome = {};
+                    incomeData.forEach(item => {
+                        groupedIncome[item.category] = (groupedIncome[item.category] || 0) + item.amount;
+                    });
+                    const pieChartOption = {
+                        title: {text: 'Income Composition', left: 'center'},
+                        tooltip: {trigger: 'item'},
+                        legend: {orient: 'vertical', left: 'left'},
+                        series: [{
+                            name: 'Income',
+                            type: 'pie',
+                            radius: '70%',
+                            data: Object.keys(groupedIncome).map(key => ({value: groupedIncome[key], name: key})),
+                            emphasis: {
+                                itemStyle: {shadowBlur: 10, shadowOffsetX: 0, shadowColor: 'rgba(0, 0, 0, 0.5)'}
+                            }
+                        }]
+                    };
+                    pieChart.setOption(pieChartOption);
+                    window.addEventListener('resize', function () {
+                        pieChart.resize();
+                    });
+                }
+
+                if (document.getElementById('incomeLineChart')) {
+                    const lineChart = echarts.init(document.getElementById('incomeLineChart'));
+                    const dailyIncome = {};
+                    incomeData.forEach(item => {
+                        const date = item.date.split('T')[0];
+                        dailyIncome[date] = (dailyIncome[date] || 0) + item.amount;
+                    });
+                    const sortedDates = Object.keys(dailyIncome).sort();
+                    const lineChartOption = {
+                        title: {text: 'Daily Income Trend', left: 'center'},
+                        tooltip: {trigger: 'axis'},
+                        xAxis: {
+                            type: 'category',
+                            data: sortedDates
+                        },
+                        yAxis: {type: 'value'},
+                        series: [{
+                            data: sortedDates.map(date => dailyIncome[date]),
+                            type: 'line',
+                            smooth: true
+                        }]
+                    };
+                    lineChart.setOption(lineChartOption);
+                    window.addEventListener('resize', function () {
+                        lineChart.resize();
+                    });
+                }
+            })
+            .catch(error => console.error('Error loading income data or initializing charts:', error));
+    });
 </script>
 </body>
 </html>
