@@ -40,17 +40,10 @@ h1, h2, h3, h4 {
     display: none !important;
 }
 
-.sidebar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
 .sidebar-header h3 {
     font-size: 1.2rem;
     margin: 0;
-    transition: opacity 0.3s ease;
+    /*transition: opacity 0.3s ease;*/
 }
 
 .sidebar.collapsed .sidebar-header h3 {
@@ -59,10 +52,10 @@ h1, h2, h3, h4 {
 }
 
 #sidebar-toggle-btn {
-    position: absolute;
+    position: relative;
     left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 40%;
+    /*transform: translateY(-50%);*/
     background: none;
     border: none;
     cursor: pointer;
@@ -73,42 +66,8 @@ h1, h2, h3, h4 {
 .toggle-icon {
     width: 20px;
     height: 20px;
-    transition: transform 0.3s ease;
-    display: block;
-}
-
-.sidebar.collapsed .toggle-icon {
-    transform: rotate(180deg);
-}
-
-.nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.nav-list li {
-    margin: 10px 0;
-}
-
-.nav-list li a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-    border-radius: 5px;
-    transition: background 0.3s ease;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.nav-list li a:hover {
-    background: #4a4e53;
-}
-
-.nav-list li a:active {
-    background-color: #f1872a;
+    /*transition: transform 0.3s ease;*/
+    /*display: block;*/
 }
 
 .sidebar.collapsed .nav-list li a span {
@@ -120,7 +79,7 @@ h1, h2, h3, h4 {
     margin-left: 250px;
     padding: 20px;
     margin-top: 60px;
-    width: calc(100% - 250px);
+    width: calc(100% - 250px);  /* sidebar is 250px */
     transition: all 0.3s ease;
 }
 
@@ -139,7 +98,7 @@ h1, h2, h3, h4 {
     background-color: #f2f2f2;
 }
 
-/* 表格样式 */
+/* table style */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -233,6 +192,7 @@ th {
 /* navigation menu style */
 .nav-list li {
     margin: 10px 0;
+    list-style: none;
 }
 
 .nav-list li a {
@@ -318,11 +278,12 @@ th {
     }
     #sidebar-toggle-btn {
         left: 10px;
-        top: 50%;
-        transform: translateY(-50%);
+        top: 40%;
+        position: relative;
     }
     .topbar .title {
         font-size: 1.1rem;
+        left: 40% !important;
     }
     .sidebar-header h3 {
         display: block !important;
@@ -400,6 +361,9 @@ body:has(.sidebar.collapsed) .content {
 }
 
 .topbar .title {
+    position: fixed;
+    left: 50%;
+    top: 10px;
     margin: 0 auto;
     text-align: center;
     flex: 1;
