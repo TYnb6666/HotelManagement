@@ -21,11 +21,6 @@ h1, h2, h3, h4 {
     z-index: 999;
 }
 
-/*.container {
-    display: flex;
-    height: 100vh;
-}*/
-
 .sidebar {
     width: 250px;
     background: #2c2f33;
@@ -257,7 +252,7 @@ th {
     background-color: #fb9301;
 }
 
-/* 下拉菜单样式 dropdown menu style */
+/* dropdown menu style */
 .dropdown > a {
     cursor: pointer;
     display: flex;

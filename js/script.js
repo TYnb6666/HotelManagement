@@ -1,38 +1,20 @@
-function loadComponent(id, file) {
-    fetch(file)
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById(id).innerHTML = data;
-        })
-        .catch(error => console.error(`fail to load ${file}: `, error));
-}
-
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const headerContainer = document.getElementById('header-container');
     const sidebarContainer = document.getElementById('sidebar-container');
-
-    // 确保容器存在
-    if (!headerContainer || !sidebarContainer) {
-        console.error('Header or Sidebar container not found on this page.');
-        return;
-    }
 
     // 使用Promise.all等待header和sidebar都加载完毕
     Promise.all([
         fetch('header.html').then(response => response.text()),
         fetch('sidebar.html').then(response => response.text())
     ])
-    .then(([headerHtml, sidebarHtml]) => {
-        // 插入HTML内容
-        headerContainer.innerHTML = headerHtml;
-        sidebarContainer.innerHTML = sidebarHtml;
+        .then(([headerHtml, sidebarHtml]) => {
+            // 插入HTML内容
+            headerContainer.innerHTML = headerHtml;
+            sidebarContainer.innerHTML = sidebarHtml;
 
-        // 所有内容加载完毕后，统一初始化UI组件
-        initializeUIComponents();
-    })
-    .catch(error => {
-        console.error('Error loading header or sidebar:', error);
-    });
+            // 所有内容加载完毕后，统一初始化UI组件
+            initializeUIComponents();
+        })
 });
 
 function initializeUIComponents() {
@@ -42,48 +24,39 @@ function initializeUIComponents() {
 
     if (!sidebar) {
         console.warn('Sidebar element not found after loading.');
-        // 如果没有sidebar，后续依赖sidebar的逻辑也不应执行
-        return; 
+        // if not sidebar, terminate function
+        return;
     }
 
     // 手机端侧边栏默认隐藏
     if (window.innerWidth <= 768) {
-        sidebar.classList.add('hidden');
+        sidebar.classList.add('hidden');  //append 'hidden' class to sidebar
         if (content) {
             content.classList.add('full');
         }
     }
 
-    if (toggleBtn) {
-        toggleBtn.addEventListener('click', function() {
-            sidebar.classList.toggle('hidden');
-            if (content) {
-                content.classList.toggle('full', sidebar.classList.contains('hidden'));
-            }
-        });
-    } else {
-        console.warn('Sidebar toggle button not found after loading.');
-    }
+    toggleBtn.addEventListener('click', function () {
+        sidebar.classList.toggle('hidden'); // if have 'hidden' then remove, if not have then append
+        if (content) {
+            content.classList.toggle('full', sidebar.classList.contains('hidden')); // 'hidden' True=>append full;'hidden' False=>remove full
+        }
+    });
 
     // 2. 下拉菜单功能
     const dropdowns = document.querySelectorAll('.sidebar .dropdown'); // 限定在sidebar内查找
     dropdowns.forEach(dropdown => {
         const dropdownLink = dropdown.querySelector('a');
         const submenu = dropdown.querySelector('.submenu');
-        
+
         if (submenu && dropdownLink) {
             submenu.style.display = 'none'; // 初始隐藏
-            
-            dropdownLink.addEventListener('click', function(e) {
-                e.preventDefault();
+
+            dropdownLink.addEventListener('click', function () {
                 const isVisible = submenu.style.display === 'block';
-                
-                // 先关闭所有其他submenu
-                document.querySelectorAll('.sidebar .submenu').forEach(sm => {
-                    if (sm !== submenu) sm.style.display = 'none';
-                });
-                // 再切换当前点击的submenu
-                submenu.style.display = isVisible ? 'none' : 'block';
+
+                // 点击当前submenu，收缩or展开
+                submenu.style.display = isVisible ? 'none' : 'block';  // lay out vertically
             });
         }
     });
@@ -95,7 +68,7 @@ function initializeUIComponents() {
         if (sidebar.classList.contains('hidden')) {
             content.classList.add('full');
         } else {
-            if (window.innerWidth > 768) {
+            if (window.innerWidth > 768) { // for PC, remove 'full' class
                 content.classList.remove('full');
             } else {
                 content.classList.add('full'); // 移动端sidebar可见时，content也应是full
@@ -103,10 +76,10 @@ function initializeUIComponents() {
         }
     }
 
-    window.addEventListener('resize', checkMobile);
+    window.addEventListener('resize', checkMobile); //adjust layout when window size changes
     // 初始检查，确保 content class 正确
     // 这会在手机端默认隐藏后，以及桌面端初始加载时正确设置 content class
-    checkMobile(); 
+    checkMobile();
 }
 
 
