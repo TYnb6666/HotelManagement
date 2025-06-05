@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Mountain Hotel</title>
+    <link rel="stylesheet" href="../css/front.css">
+    <style>
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('../img/login.png') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 1;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header img {
+            width: 120px;
+            margin-bottom: 20px;
+        }
+
+        .login-header h2 {
+            color: var(--main-green-dark);
+            font-size: 24px;
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+
+        .form-group {
+            margin-bottom: 20px;
+
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--main-green-dark);
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+            height: 45px;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus {
+            border-color: var(--main-gold);
+            outline: none;
+        }
+
+        .login-btn {
+            width: 100%;
+            height: 45px;
+            padding: 0;
+            margin-top: 10px;
+            background: var(--main-gold);
+            color: var(--main-green);
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .login-btn:hover {
+            background: #e5d18a;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: var(--main-green);
+            text-decoration: none;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .back-link:hover {
+            color: var(--main-gold);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <img src="../img/logo.png" alt="Mountain Hotel Logo">
+                <h2>Welcome Back</h2>
+            </div>
+            <form action="#" method="post">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit" class="login-btn">Sign In</button>
+            </form>
+            <a href="index.html" class="back-link">Back to Homepage</a>
+        </div>
+    </div>
+</body>
+</html>
