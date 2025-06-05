@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Login - Mountain Hotel</title>
     <link rel="stylesheet" href="../css/front.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="login-container">
@@ -13,7 +13,7 @@
                 <img src="../img/logo.png" alt="Mountain Hotel Logo">
                 <h2>Welcome Back</h2>
             </div>
-            <form action="#" method="post">
+            <form id="loginForm">
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" required>
@@ -27,5 +27,58 @@
             <a href="index.html" class="back-link">Back to Homepage</a>
         </div>
     </div>
+
+    <div class="modal-container" id="optionsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Select Service</h3>
+            </div>
+            <div class="modal-options">
+                <button class="option-btn" onclick="selectOption('dining')">
+                    <i class="fas fa-utensils"></i>
+                    Dining
+                </button>
+                <button class="option-btn" onclick="selectOption('resdience')">
+                    <i class="fas fa-bed"></i>
+                    Residence
+                </button>
+                <button class="option-btn" onclick="selectOption('finance')">
+                    <i class="fas fa-cash-register"></i>
+                    Finance
+                </button>
+                <button class="option-btn" onclick="selectOption('entertainment')">
+                    <i class="fas fa-film"></i>
+                    Entertainment
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // 这里可以添加登录验证逻辑
+            document.getElementById('optionsModal').classList.add('show');
+        });
+
+        function selectOption(role) {
+            // 这里可以根据选择的角色进行跳转
+            console.log('Selected role:', role);
+            switch(role) {
+                case 'dining':
+                    window.location.href = '#餐饮后台';
+                    break;
+                case 'residence':
+                    window.location.href = '#酒店后台';
+                    break;
+                case 'finance':
+                    window.location.href = '#财务后台';
+                    break;
+                case 'entertainment':
+                    window.location.href = '#娱乐后台';
+                    break;
+            }
+        }
+    </script>
 </body>
 </html>
