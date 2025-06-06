@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     fetch("../data/data.json") // fetch JSON data
-        .then(response => response.json()) // analyse JSON
+        .then(response => response.json()) // parse to JSON format
         .then(data => {
             let incomeTableBody = document.getElementById("income-table-body");
             let incomeRecords = data.income; // only derive income data
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const targetDate = "2025-04-05";
 
-            // 加标记，收入 type 为 "income"，支出为 "expense"
+            // add tag，income type "income"，expense type "expense"
             const transactions = [
                 ...data.income.map(item => ({...item, type: "income"})),
                 ...data.expenses.map(item => ({...item, type: "expense"}))

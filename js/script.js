@@ -2,17 +2,17 @@ document.addEventListener('DOMContentLoaded', function () {
     const headerContainer = document.getElementById('header-container');
     const sidebarContainer = document.getElementById('sidebar-container');
 
-    // 使用Promise.all等待header和sidebar都加载完毕
+    // Promise.all: waiting  for header and sidebar loading
     Promise.all([
-        fetch('header.html').then(response => response.text()),
+        fetch('header.html').then(response => response.text()),  //derive primitive text
         fetch('sidebar.html').then(response => response.text())
     ])
         .then(([headerHtml, sidebarHtml]) => {
-            // 插入HTML内容
+            // insert HTML content
             headerContainer.innerHTML = headerHtml;
             sidebarContainer.innerHTML = sidebarHtml;
 
-            // 所有内容加载完毕后，统一初始化UI组件
+            // After all the contents have been loaded, initialize the UI components uniformly
             initializeUIComponents();
         })
 });
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
 function initializeUIComponents() {
     const sidebar = document.querySelector('.sidebar');
     const toggleBtn = document.getElementById('sidebar-toggle-btn');
-    const content = document.querySelector('.content'); // 主页面内容区域
+    const content = document.querySelector('.content'); // Main page content area
 
     if (!sidebar) {
         console.warn('Sidebar element not found after loading.');
@@ -28,7 +28,7 @@ function initializeUIComponents() {
         return;
     }
 
-    // 手机端侧边栏默认隐藏
+    // sidebar on the mobile phone is hidden by default
     if (window.innerWidth <= 768) {
         sidebar.classList.add('hidden');  //append 'hidden' class to sidebar
         if (content) {
@@ -43,27 +43,27 @@ function initializeUIComponents() {
         }
     });
 
-    // 2. 下拉菜单功能
-    const dropdowns = document.querySelectorAll('.sidebar .dropdown'); // 限定在sidebar内查找
+    // Drop-down menu function
+    const dropdowns = document.querySelectorAll('.sidebar .dropdown'); // Search limited to within the sidebar
     dropdowns.forEach(dropdown => {
         const dropdownLink = dropdown.querySelector('a');
         const submenu = dropdown.querySelector('.submenu');
 
         if (submenu && dropdownLink) {
-            submenu.style.display = 'none'; // 初始隐藏
+            submenu.style.display = 'none'; // Initial hiding
 
             dropdownLink.addEventListener('click', function () {
                 const isVisible = submenu.style.display === 'block';
 
-                // 点击当前submenu，收缩or展开
+                // click submenu，collapse or expend
                 submenu.style.display = isVisible ? 'none' : 'block';  // lay out vertically
             });
         }
     });
 
-    // 3. 移动端响应式调整 (确保sidebar和content在调用时已存在)
+    // 3. Mobile responsive adjustment
     function checkMobile() {
-        if (!content) return; // 如果content不存在，则不执行
+        if (!content) return; // if content not exist，terminate
 
         if (sidebar.classList.contains('hidden')) {
             content.classList.add('full');
@@ -71,14 +71,14 @@ function initializeUIComponents() {
             if (window.innerWidth > 768) { // for PC, remove 'full' class
                 content.classList.remove('full');
             } else {
-                content.classList.add('full'); // 移动端sidebar可见时，content也应是full
+                content.classList.add('full'); // when mobile sidebar visible，content is full
             }
         }
     }
 
     window.addEventListener('resize', checkMobile); //adjust layout when window size changes
-    // 初始检查，确保 content class 正确
-    // 这会在手机端默认隐藏后，以及桌面端初始加载时正确设置 content class
+    // Initial check to ensure that the content class is correct
+    // This will correctly set the content class after it is hidden by default on the mobile phone end and during the initial loading on the desktop end
     checkMobile();
 }
 

@@ -20,14 +20,14 @@ let expenseCurrent = {};
 const incomeTableBody = document.getElementById('budget-table');
 const expenseTableBody = document.getElementById('expense-table');
 
-// 加载数据 load data
+// load data
 fetch('../data/data.json')
     .then(response => response.json())
     .then(data => {
         const incomeData = data.income;
         const expensesData = data.expenses;
 
-        // 计算收入 calculate income
+        // calculate income
         incomeData.forEach(entry => {
             if (!businessCurrent[entry.category]) {
                 businessCurrent[entry.category] = 0;
@@ -35,7 +35,7 @@ fetch('../data/data.json')
             businessCurrent[entry.category] += entry.amount;
         });
 
-        // 计算支出 calculate expenses
+        // calculate expenses
         expensesData.forEach(entry => {
             if (!expenseCurrent[entry.category]) {
                 expenseCurrent[entry.category] = 0;
@@ -45,13 +45,13 @@ fetch('../data/data.json')
 
         renderIncomeTable();
         renderExpenseTable();
-        calculateProfit();
+        calculateProfitAndRenderChart();
     })
     .catch(error => {
         console.error('Error loading data:', error);
     });
 
-// 渲染收入表 render income table
+// render income table
 function renderIncomeTable() {
     incomeTableBody.innerHTML = '';
     Object.keys(businessGoals).forEach(category => {
@@ -95,7 +95,7 @@ function renderIncomeTable() {
 }
 
 
-// 渲染支出表 render expense table
+// render expense table
 function renderExpenseTable() {
     expenseTableBody.innerHTML = '';
     Object.keys(expenseBudget).forEach(category => {
@@ -124,7 +124,7 @@ function renderExpenseTable() {
         const percentage = Math.min((current / expenseBudget[category]) * 100, 100);
         fill.style.width = percentage + '%';
         fill.style.backgroundColor = percentage >= 100 ? 'red' : 'green';
-        fill.textContent = Math.round(percentage) + '%'; // ★ 支出表也加上百分比文字
+        fill.textContent = Math.round(percentage) + '%'; // percentage format
         fill.style.textAlign = 'center';
         fill.style.color = 'white';
         fill.style.fontSize = '12px';
@@ -138,7 +138,7 @@ function renderExpenseTable() {
     });
 }
 
-// 修改收入 modify income
+// modify income
 document.getElementById('modifyIncomeBtn').onclick = () => {
     document.getElementById('hotelInput').value = businessGoals["Hotel"];
     document.getElementById('restaurantInput').value = businessGoals["Restaurant"];
@@ -153,10 +153,10 @@ document.getElementById('confirmIncomeBtn').onclick = () => {
     localStorage.setItem('incomeGoals', JSON.stringify(businessGoals)); //save to local storage
     document.getElementById('incomeModal').style.display = 'none';
     renderIncomeTable();
-    calculateProfit();
+    calculateProfitAndRenderChart();
 };
 
-// 修改支出 modify expenses
+// modify expenses
 document.getElementById('modifyExpenseBtn').onclick = () => {
     document.getElementById('salaryInput').value = expenseBudget["Salaries"];
     document.getElementById('utilityInput').value = expenseBudget["Utilities"];
@@ -175,7 +175,7 @@ document.getElementById('confirmExpenseBtn').onclick = () => {
     localStorage.setItem('expenseGoals', JSON.stringify(expenseBudget));
     document.getElementById('expenseModal').style.display = 'none';
     renderExpenseTable();
-    calculateProfit();
+    calculateProfitAndRenderChart();
 };
 
 let profitChartInstance = null; // To store ECharts instance for profitChart
@@ -246,21 +246,21 @@ function initOrUpdateProfitChart(profitGoal, actualProfit) {
 }
 
 function calculateProfitAndRenderChart() {
-    // These variables need to be defined and populated based on your application logic
-    // For example, loaded from localStorage or another data source.
-    // Using placeholder values for demonstration if they are not globally available.
-    const businessGoals = JSON.parse(localStorage.getItem('businessGoals')) || { Hotel: 20000, Restaurant: 15000, Entertainment: 5000 };
-    const expenseBudget = JSON.parse(localStorage.getItem('expenseGoals')) || { Salaries: 8000, Utilities: 3000, Maintenance: 2000, Supplies: 1500, Marketing: 1000 };
-    const businessCurrent = JSON.parse(localStorage.getItem('businessCurrent')) || { Hotel: 18000, Restaurant: 12000, Entertainment: 6000 };
-    const expenseCurrent = JSON.parse(localStorage.getItem('expenseCurrent')) || { Salaries: 7500, Utilities: 2800, Maintenance: 2200, Supplies: 1300, Marketing: 900 };
+    const businessGoals = JSON.parse(localStorage.getItem('incomeGoals'));
+    const expenseBudget = JSON.parse(localStorage.getItem('expenseGoals'));
+    
+    // Calculate total current income from businessCurrent
+    const currentIncome = Object.values(businessCurrent).reduce((sum, value) => sum + value, 0);
+    
+    // Calculate total current expenses from expenseCurrent
+    const currentExpenses = Object.values(expenseCurrent).reduce((sum, value) => sum + value, 0);
 
-    const estimatedIncomeTotal = Object.values(businessGoals).reduce((a, b) => a + b, 0);
-    const estimatedExpenseTotal = Object.values(expenseBudget).reduce((a, b) => a + b, 0);
-    const actualIncomeTotal = Object.values(businessCurrent).reduce((a, b) => a + b, 0);
-    const actualExpenseTotal = Object.values(expenseCurrent).reduce((a, b) => a + b, 0);
+    // Calculate total goals
+    const totalIncomeGoal = Object.values(businessGoals).reduce((sum, value) => sum + value, 0);
+    const totalExpenseGoal = Object.values(expenseBudget).reduce((sum, value) => sum + value, 0);
 
-    const profitGoal = estimatedIncomeTotal - estimatedExpenseTotal;
-    const actualProfit = actualIncomeTotal - actualExpenseTotal;
+    const profitGoal = totalIncomeGoal - totalExpenseGoal;
+    const actualProfit = currentIncome - currentExpenses;
 
     const profitGoalValueEl = document.getElementById('profitGoalValue');
     const actualProfitValueEl = document.getElementById('actualProfitValue');
@@ -280,25 +280,8 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('ECharts library is not loaded in budgetControl.html. Make sure to include it before budgetControl.js.');
         return;
     }
-    // Initial rendering of tables and chart
-    // renderIncomeTable(); // You need to call your table rendering functions
-    // renderExpenseTable();
     calculateProfitAndRenderChart(); 
 
-    // Add event listeners for modal buttons if they modify data and need chart refresh
-    // Example:
-    // document.getElementById('confirmIncomeBtn').onclick = () => {
-    //     ... update income data ...
-    //     localStorage.setItem('businessGoals', JSON.stringify(businessGoals));
-    //     renderIncomeTable();
-    //     calculateProfitAndRenderChart();
-    // };
-    // document.getElementById('confirmExpenseBtn').onclick = () => {
-    //    ... update expense data ...
-    //    localStorage.setItem('expenseGoals', JSON.stringify(expenseBudget));
-    //    renderExpenseTable();
-    //    calculateProfitAndRenderChart();
-    // };
 });
 
 // Make sure your other functions like renderExpenseTable, etc. call calculateProfitAndRenderChart() after data changes.

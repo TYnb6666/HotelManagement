@@ -62,7 +62,7 @@
         });
 
         function selectOption(role) {
-            // 这里可以根据选择的角色进行跳转
+            // jump to different services according to choice
             console.log('Selected role:', role);
             switch(role) {
                 case 'dining':
@@ -72,7 +72,7 @@
                     window.location.href = '#酒店后台';
                     break;
                 case 'finance':
-                    window.location.href = '#财务后台';
+                    window.location.href = './dashboard.html';
                     break;
                 case 'entertainment':
                     window.location.href = '#娱乐后台';
