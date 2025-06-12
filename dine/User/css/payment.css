@@ -1,0 +1,176 @@
+.payment-section {
+  max-width: 900px;
+  margin: 48px auto 0 auto;
+  padding: 0 24px 48px 24px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.10);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.payment-title {
+  font-size: 32px;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 700;
+  color: #b71c1c;
+  text-align: center;
+  margin: 0 0 36px 0;
+  padding-top: 32px;
+}
+
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+}
+
+.order-box {
+  background: #faf7f7;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(183,28,28,0.06);
+  padding: 32px 32px 24px 32px;
+  margin-bottom: 0;
+}
+
+.order-box h2 {
+  font-size: 24px;
+  font-family: 'Times New Roman', Times, serif;
+  color: #b71c1c;
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.order-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+}
+
+.order-items li {
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #222;
+  padding: 8px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.order-items li:last-child {
+  border-bottom: none;
+}
+
+.order-discount {
+  color: #b71c1c;
+  font-size: 16px;
+  margin: 12px 0 0 0;
+  font-weight: 600;
+}
+
+.order-total {
+  font-size: 20px;
+  color: #222;
+  font-weight: bold;
+  margin: 16px 0 0 0;
+  text-align: right;
+}
+
+.payment-methods {
+  display: flex;
+  gap: 24px;
+  margin-top: 24px;
+  justify-content: flex-end;
+}
+
+.pay-btn {
+  background: #b71c1c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 700;
+  padding: 12px 32px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.pay-btn:hover {
+  background: #a31515;
+}
+
+.download-invoice-btn {
+  background: #b71c1c;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 700;
+  padding: 12px 32px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  margin-top: 16px;
+  box-shadow: 0 2px 8px rgba(183,28,28,0.10);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.download-invoice-btn::before {
+  content: '\1F4BE'; 
+  font-size: 18px;
+}
+
+.download-invoice-btn:hover {
+  background: #a31515;
+}
+
+.order-divider {
+  border: none;
+  border-top: 3px solid #b71c1c;
+  margin: 48px 0;
+}
+
+.coupon-section {
+  margin: 15px 0;
+}
+
+.coupon-btn {
+  margin: 5px;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 8px;
+  background-color: #b71c1c;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.coupon-btn:hover {
+  background-color: #8f1616;
+}
+
+.coupon-btn.active {
+  background-color: #5d0e0e;
+}
+
+@media (max-width: 900px) {
+  .payment-section {
+    padding: 0 6px 24px 6px;
+  }
+  .order-list {
+    gap: 24px;
+  }
+  .order-box {
+    padding: 18px 8px 12px 8px;
+  }
+  .payment-methods {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-end;
+  }
+}

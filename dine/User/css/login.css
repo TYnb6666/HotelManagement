@@ -1,0 +1,164 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url('../../User/image/LoginBackground.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.login-box {
+  background-color: rgba(255, 255, 255, 0.55);
+  padding: 40px 35px;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.15);
+  width: 420px;
+  height: 400px;
+}
+
+.login-box h2,
+.login-box p,
+.login-box label {
+  color: #222 !important;
+  text-shadow: 0 1px 4px rgba(255,255,255,0.2);
+}
+
+.form-group input {
+  color: #222;
+}
+
+.form-group input::placeholder {
+  color: #888;
+  opacity: 1;
+}
+
+.login-box h2 {
+  text-align: center;
+  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.login-box p {
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.form-group {
+  position: relative;
+  margin-bottom: 30px;
+}
+
+.form-group input {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  font-size: 16px;
+  padding: 8px 0;
+  background: transparent;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #2a64d2;
+  font-size: 14px;
+  user-select: none;
+}
+
+.login-box button {
+  width: 100%;
+  background-color: white;
+  color: #222;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.login-box button:hover {
+  background-color: #f5f5f5;
+}
+
+.admin-link {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+}
+
+.admin-link a button {
+  background-color: #666;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.admin-link a button:hover {
+  background-color: #444;
+  opacity: 1;
+}
+
+/* Register Modal Styles */
+#registerModal {
+  display: none;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 24px 32px;
+  z-index: 1000;
+  border-radius: 8px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
+  min-width: 320px;
+}
+
+#registerModal h3 {
+  margin-top: 0;
+  text-align: center;
+}
+
+#registerModal input {
+  width: 100%;
+  margin-bottom: 12px;
+  padding: 8px;
+}
+
+#registerModal button {
+  flex: 1;
+  background-color: #4CAF50;
+  color: #fff;
+  border: 1px solid #ccc;
+  padding: 6px;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+#registerModal #closeRegister {
+  background-color: #bbb;
+}
+
+#registerMsg {
+  margin-top: 10px;
+  font-size: 14px;
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>  <title>LoginPage</title>
+  <link rel="stylesheet" href="User/css/login.css">
+</head>
+<body>
+
+  <!-- Login form container -->
+  <div class="container">
+    <div class="login-box">
+      <!-- Logo image -->
+      <img src="User/Logo.jpg" alt="Logo" style="display:block;margin:0 auto 18px auto;width:72px;height:72px;border-radius:50%;object-fit:cover;">
+      <h2>Welcome to the SanShan Ordering System</h2>
+      <p>Please enter your username and password</p>
+      <!-- User login form -->
+      <form action="../v1/User/index.html" method="get">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" placeholder="Enter your username" required>
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="Enter your password" required>
+        </div>        <button type="submit" id="user-login-btn">User Login</button>
+        <!-- Register button -->
+        <button type="button" id="registerBtn" style="width:100%;margin-top:12px;">Register</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin entrance button -->
+  <div class="admin-link">
+    <a href="#"><button id="admin-entrance-btn" type="button">Admin Entrance</button></a>
+  </div>
+
+  <!-- Register Modal -->
+  <div id="registerModal">
+    <h3>Register New Account</h3>
+    <input type="text" id="regUsername" placeholder="Username">
+    <input type="password" id="regPassword" placeholder="Password">
+    <div style="display:flex;gap:8px;">
+      <button id="submitRegister">Submit</button>
+      <button id="closeRegister">Close</button>
+    </div>
+    <div id="registerMsg"></div>
+  </div>
+
+  <script src="User/js/LoginPage.js"></script>
+  <script src="User/js/register.js"></script>
+</body>
+</html>

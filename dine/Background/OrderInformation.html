@@ -1,0 +1,58 @@
+<!--The system should record customer order information, generate orders, and 
+communicate in real time with the kitchen, waiters, and other relevant departments to reduce order errors and service defects.
+Support order prioritization, modification, and cancellation to improve order processing efficiency.-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Information</title>
+    <link rel="stylesheet" href="../User/css/Navigator.css">
+    <link rel="stylesheet" href="../User/css/payment.css">
+  </head>
+  <body>
+    <!-- Top navigation bar -->
+    <div class="navbar">
+      <!-- Logo section -->
+      <div class="logo">
+        <img src="../User/Logo.jpg" alt="Logo">
+      </div>
+      <!-- Navigation links -->
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="OrderInformation.html">Order Information</a>
+        <a href="DataOverview.html">Data Overview</a>
+        <a href="Menu.html">Menu</a>
+      </div>
+      <!-- User section -->
+      <div class="user-section">
+        <a href="../LoginPage.html" style="text-decoration: none; color: black; font-weight: bold;">
+          Back to Login
+        </a>
+      </div>
+    </div>
+    <div class="payment-section">
+      <h1 class="payment-title">Order Information</h1>
+      <div class="order-list">
+        <!-- Orders will be rendered here by JS -->
+      </div>
+    </div>
+
+    <!-- Edit Order Modal -->
+    <div id="editOrderModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); justify-content: center; align-items: center;">
+      <div style="background: white; padding: 20px; border-radius: 8px; width: 400px;">
+        <h2>Edit Order</h2>
+        <form id="editOrderForm">
+          <div id="editOrderItems">
+            <!-- Items will be dynamically added here by JS -->
+          </div>
+          <div style="margin-top: 20px; text-align: right;">
+            <button type="button" onclick="closeEditOrderModal()" style="margin-right: 10px;">Cancel</button>
+            <button type="submit">Save</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+  <script src="js/OrderInformation.js"></script>
+</html>

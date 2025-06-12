@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="css/menu.css">
+</head>
+<body>
+    <!-- Updated navigation bar to match the style of other pages -->
+    <div class="navbar">
+        <!-- Logo section -->
+        <div class="logo">
+            <img src="../User/Logo.jpg" alt="Logo">
+        </div>
+        <!-- Navigation links -->
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="OrderInformation.html">Order Information</a>
+            <a href="DataOverview.html">Data Overview</a>
+            <a href="Menu.html">Menu</a>
+        </div>
+        <!-- User section -->
+        <div class="user-section">
+            <a href="../LoginPage.html">Back to Login</a>
+        </div>
+    </div>
+    <div class="menu-section">
+        <!-- Set Meal Section -->
+        <h2 class="menu-category-title">Set Meal</h2>
+        <table class="menu-table">
+            <tr>
+                <th>Dish Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            <tr>
+                <td>Deluxe Set for Two</td>
+                <td>$188</td>
+                <td>
+                    <button onclick="editDish(this)" class="edit-btn">Edit</button>
+                    <button onclick="deleteDish(this)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Family Set for Four</td>
+                <td>$328</td>
+                <td>
+                    <button onclick="editDish(this)" class="edit-btn">Edit</button>
+                    <button onclick="deleteDish(this)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Seafood Set</td>
+                <td>$268</td>
+                <td>
+                    <button onclick="editDish(this)" class="edit-btn">Edit</button>
+                    <button onclick="deleteDish(this)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+        </table>
+        <button onclick="addDish('setmeal')" class="add-btn">Add New Set Meal</button>
+        <hr class="menu-divider">
+
+        <!-- Single Item Section -->
+        <h2 class="menu-category-title">Single Item</h2>
+        <table class="menu-table">
+            <tr>
+                <th>Dish Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            <tr>
+                <td>Kung Pao Chicken</td>
+                <td>$48</td>
+                <td>
+                    <button onclick="editDish(this)" class="edit-btn">Edit</button>
+                    <button onclick="deleteDish(this)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Beef Noodles</td>
+                <td>$42</td>
+                <td>
+                    <button onclick="editDish(this)" class="edit-btn">Edit</button>
+                    <button onclick="deleteDish(this)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Vegetarian Bento</td>
+                <td>$38</td>
+                <td>
+                    <button onclick="editDish(this)" class="edit-btn">Edit</button>
+                    <button onclick="deleteDish(this)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+        </table>
+        <button onclick="addDish('single')" class="add-btn">Add New Single Item</button>
+        <hr class="menu-divider">
+
+        <!-- Special Offer Section -->
+        <h2 class="menu-category-title">Special Offer</h2>
+        <table class="menu-table">
+            <tr>
+                <th>Dish Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+            <tr>
+                <td>Honey Roasted Chicken</td>
+                <td>$58</td>
+                <td>
+                    <button onclick="editDish(this)" class="edit-btn">Edit</button>
+                    <button onclick="deleteDish(this)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Grilled Salmon Bowl</td>
+                <td>$68</td>
+                <td>
+                    <button onclick="editDish(this)" class="edit-btn">Edit</button>
+                    <button onclick="deleteDish(this)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+            <tr>
+                <td>Chef's Special</td>
+                <td>$88</td>
+                <td>
+                    <button onclick="editDish(this)" class="edit-btn">Edit</button>
+                    <button onclick="deleteDish(this)" class="delete-btn">Delete</button>
+                </td>
+            </tr>
+        </table>
+        <button onclick="addDish('special')" class="add-btn">Add Special Offer</button>
+    </div>
+
+    <!-- Modal for editing dishes -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h3>Edit Dish</h3>
+            <form id="editForm">
+                <input type="text" id="dishName" placeholder="Dish Name" required>
+                <input type="number" id="dishPrice" placeholder="Price" required>
+                <button type="submit">Save</button>
+                <button type="button" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/menu.js"></script>
+</body>
+</html>

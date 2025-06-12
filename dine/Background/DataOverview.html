@@ -1,0 +1,89 @@
+<!--Display customer order data, statistics, and 
+analysis for management decision support, such as best-selling dishes, customer preferences, and 
+real-time feedback. Layout matches index.html.-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MOUNTAINS</title>
+    <link rel="stylesheet" href="../User/css/Navigator.css">
+    <link rel="stylesheet" href="css/DataOverview.css">
+</head>
+<body>
+<!-- Top navigation bar -->
+<div class="navbar">
+    <!-- Logo section -->
+    <div class="logo">
+        <img src="../User/Logo.jpg" alt="Logo">
+    </div>
+    <!-- Navigation links -->
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="OrderInformation.html">Order Information</a>
+        <a href="DataOverview.html">Data Overview</a>
+        <a href="Menu.html">Menu</a>
+    </div>
+    <!-- User section -->
+    <div class="user-section">
+        <a href="../LoginPage.html" style="text-decoration: none; color: black; font-weight: bold;">
+            Back to Login
+        </a>
+    </div>
+</div>
+
+<div class="data-section"><h1 class="data-title">Restaurant Data Overview</h1>
+    <div class="data-list">
+        <div class="data-box">
+            <h3>Best-selling Dishes</h3>
+            <ul style="font-size:1.05rem; margin-bottom: 16px;">
+                <li><b>Spicy Chicken</b> – 320 orders, popular for its bold flavor and tender meat.</li>
+                <li><b>Grilled Fish</b> – 275 orders, loved for its freshness and unique seasoning.</li>
+                <li><b>Mapo Tofu</b> – 210 orders, a favorite among both vegetarians and spice lovers.</li>
+            </ul>
+            <div style="color:#888; font-size:0.98rem;">These dishes consistently top the sales chart, indicating strong customer preference for spicy and flavorful options.</div>
+            <div style="margin-top:18px; color:#1976d2; font-size:0.99rem; font-weight:500;">Suggestion: Consider launching more spicy and vegetarian dishes, and hold regular promotions for signature dishes.</div>
+        </div>
+        <div class="data-box">
+            <h3>Customer Preferences</h3>
+            <ul style="font-size:1.05rem; margin-bottom: 16px;">
+                <li>Most customers prefer <b>spicy</b> and <b>savory</b> dishes.</li>
+                <li>Vegetarian options are increasingly popular, with a 15% rise in orders this month.</li>
+                <li>Family meal sets are frequently chosen for group dining.</li>
+            </ul>
+            <div style="color:#888; font-size:0.98rem;">Understanding these trends helps optimize menu offerings and marketing strategies.</div>
+            <div style="margin-top:18px; color:#1976d2; font-size:0.99rem; font-weight:500;">Suggestion: Expand healthy, vegetarian, and family meal options, and highlight the concept of healthy eating.</div>
+        </div>
+        <div class="data-box">
+            <h3>Real-time Feedback & Ratings</h3>
+            <ul style="font-size:1.05rem; margin-bottom: 16px;">
+                <li>Average Dish Rating: <b>4.7/5</b> (based on 1,200 reviews)</li>
+                <li>Service Satisfaction: <b>96%</b> positive feedback</li>                <li>Recent Comments: <i>"Delicious food!"</i>, <i>"Great service!"</i>, <i>"Will come again!"</i></li>
+                <li>Feedback Participation Rate: <b>76%</b></li>
+            </ul>
+            <div style="color:#888; font-size:0.98rem;">Customer feedback is collected in real time and used to improve both food quality and service experience.</div>
+            <div style="margin-top:18px; color:#1976d2; font-size:0.99rem; font-weight:500;">Suggestion: Keep monitoring customer feedback, quickly optimize dishes and services based on common suggestions, and improve repurchase rate.</div>
+        </div>
+        <div class="data-box">
+            <h3>Management Insights</h3>
+            <ul style="font-size:1.05rem; margin-bottom: 16px;">
+                <li>Peak dining hours: <b>12:00–13:30</b> and <b>18:00–20:00</b></li>
+                <li>Table turnover rate: <b>3.2</b> (above industry average)</li>
+                <li>Customer retention rate: <b>82%</b></li>
+            </ul>
+            <div style="color:#888; font-size:0.98rem;">These insights help management make informed decisions on staffing, promotions, and menu updates.</div>            <div style="margin-top:18px; color:#1976d2; font-size:0.99rem; font-weight:500;">Suggestion: Increase staff during peak hours, launch membership points and loyalty discounts to enhance customer retention.</div>        </div>    
+    
+        <div class="data-box">
+            <h3>Customer Messages</h3>
+            <ul id="messagesList" style="font-size:1.05rem; margin-bottom: 16px;">
+                <!-- Messages will be displayed here -->
+            </ul>
+            <div style="color:#888; font-size:0.98rem;">Real-time customer feedback and special requirements from the menu page.</div>
+            <div style="margin-top:18px; color:#1976d2; font-size:0.99rem; font-weight:500;">Suggestion: Address customer requirements promptly to improve service quality.</div>
+        </div>
+    </div>
+</div>
+
+<script src="js/DataOverview.js"></script>
+</body>
+</html>

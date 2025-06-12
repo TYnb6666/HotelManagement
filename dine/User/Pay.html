@@ -1,0 +1,128 @@
+<!-- Support multiple payment methods (such as cash, bank card, mobile payment, etc.), and 
+ can automatically calculate discounts, coupons, etc., providing clear bills and invoices.
+ Assume some payment data yourself, provide bills and invoices, which can be downloaded
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Page</title>
+    <link rel="stylesheet" href="../User/css/Navigator.css">
+    <link rel="stylesheet" href="../User/css/payment.css">
+  </head>
+  
+<body>
+<!-- Navigation bar, present on every page, simplest way -->
+
+  <!-- Top navigation bar -->
+  <div class="navbar">
+    <!-- Logo section -->
+    <div class="logo">
+      <img src="Logo.jpg" alt="Logo">
+    </div>
+
+    <!-- Navigation links -->
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="Reserve.html">Reserve</a>
+      <a href="Take-out.html">Take-out</a>
+      <a href="Menu.html">Menu</a>
+      <a href="Pay.html">Payment</a>
+      <a href="Activity.html">Activity</a>
+      <a href="Feedback.html">Feedback</a>
+    </div>
+
+    <!-- User section -->
+    <div class="user-section">
+      <a href="../LoginPage.html" style="text-decoration: none; color: black; font-weight: bold;">
+        Back to Login
+      </a>
+    </div>
+  </div>
+
+  <div class="payment-section">
+    <h1 class="payment-title">Order Payment</h1>
+    <div class="order-list">
+      <!-- Order 1 -->
+      <div class="order-box" id="order-1">
+        <h2>Order 1</h2>
+        <ul class="order-items">
+          <li><span>Deluxe Set for Two</span><span>$128</span></li>
+          <li><span>Honey Roasted Chicken (Special)</span><span>$18</span></li>
+        </ul>
+        <div class="order-discount">Special Offer Discount: -$10</div>
+        <div class="order-total">Total: $136</div>
+        <div class="coupon-section">
+          <h3>Select a Coupon</h3>
+          <button class="coupon-btn" data-order="1" data-coupon="5">$5 Off</button>
+          <button class="coupon-btn" data-order="1" data-coupon="10">$10 Off</button>
+          <button class="coupon-btn" data-order="1" data-coupon="15">$15 Off</button>
+        </div>
+        <div class="payment-methods">
+          <button class="pay-btn">Cash</button>
+          <button class="pay-btn">Bank Card</button>
+          <button class="pay-btn">Mobile Pay</button>
+        </div>
+      </div>
+      <hr class="order-divider">
+      <!-- Order 2 -->
+      <div class="order-box" id="order-2">
+        <h2>Order 2</h2>
+        <ul class="order-items">
+          <li><span>Family Set for Four</span><span>$258</span></li>
+          <li><span>Vegetarian Bento</span><span>$25</span></li>
+          <li><span>Grilled Salmon Bowl (Special)</span><span>$22</span></li>
+        </ul>
+        <div class="order-discount">Special Offer Discount: -$8</div>
+        <div class="order-total">Total: $297</div>
+        <div class="coupon-section">
+          <h3>Select a Coupon</h3>
+          <button class="coupon-btn" data-order="2" data-coupon="5">$5 Off</button>
+          <button class="coupon-btn" data-order="2" data-coupon="10">$10 Off</button>
+          <button class="coupon-btn" data-order="2" data-coupon="15">$15 Off</button>
+        </div>
+        <div class="payment-methods">
+          <button class="pay-btn">Cash</button>
+          <button class="pay-btn">Bank Card</button>
+          <button class="pay-btn">Mobile Pay</button>
+        </div>
+      </div>
+      <hr class="order-divider">
+      <!-- Order 3 -->
+      <div class="order-box" id="order-3">
+        <h2>Order 3</h2>
+        <ul class="order-items">
+          <li><span>Kung Pao Chicken</span><span>$28</span></li>
+          <li><span>Beef Noodles</span><span>$32</span></li>
+          <li><span>Chef's Special (Special)</span><span>$20</span></li>
+        </ul>
+        <div class="order-discount">Special Offer Discount: -$5</div>
+        <div class="order-total">Total: $75</div>
+        <div class="coupon-section">
+          <h3>Select a Coupon</h3>
+          <button class="coupon-btn" data-order="3" data-coupon="5">$5 Off</button>
+          <button class="coupon-btn" data-order="3" data-coupon="10">$10 Off</button>
+          <button class="coupon-btn" data-order="3" data-coupon="15">$15 Off</button>
+        </div>
+        <div class="payment-methods">
+          <button class="pay-btn">Cash</button>
+          <button class="pay-btn">Bank Card</button>
+          <button class="pay-btn">Mobile Pay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="invoice-section" style="text-align:center; margin-top:40px;">
+    <h2>Invoice</h2>
+    <!-- Only download button is shown -->
+    <a href="image/invoice.png" download="invoice.png">
+      <button class="download-invoice-btn">Download Invoice</button>
+    </a>
+  </div>
+
+  <!-- Discount -->
+  <script src="../User/js/payment.js"></script>
+</body>
+</html>

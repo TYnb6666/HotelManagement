@@ -1,0 +1,188 @@
+/* Updated menu.css to align navigation bar style with other pages */
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1);
+  z-index: 1000;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.nav-links {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  gap: 60px;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.nav-links a:hover {
+  color: #007bff;
+}
+
+.menu-section {
+  margin-top: 80px;
+  padding: 20px;
+}
+
+.menu-category-title {
+  color: #333;
+  font-size: 24px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.menu-table {
+  width: 80%;
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+.menu-table th,
+.menu-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-table th {
+  background-color: #f8f9fa;
+  font-weight: bold;
+}
+
+.menu-divider {
+  margin: 30px auto;
+  width: 80%;
+  border: 0;
+  border-top: 1px solid #ddd;
+}
+
+.user-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  margin-left: 20px;
+}
+
+.user-section a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.user-section a:hover {
+  color: #007bff;
+}
+
+/* Button styles */
+.edit-btn, .delete-btn, .add-btn {
+    padding: 6px 12px;
+    margin: 0 4px;
+    border: 1px solid #000;
+    border-radius: 0;  /* Square corners */
+    cursor: pointer;
+    font-size: 14px;
+    background-color: #fff;
+    color: #000;
+    font-family: 'Times New Roman', Times, serif;
+    transition: all 0.2s ease;
+}
+
+.edit-btn:hover, .delete-btn:hover, .add-btn:hover {
+    background-color: #f8f8f8;
+}
+
+.add-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 8px 16px;
+}
+
+/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1001;
+}
+
+.modal-content {
+    background-color: white;
+    width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-content h3 {
+    margin-bottom: 20px;
+}
+
+.modal-content input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.modal-content button {
+    padding: 8px 16px;
+    margin: 0 8px;
+    border: 1px solid #000;
+    border-radius: 0;
+    cursor: pointer;
+    background-color: #fff;
+    color: #000;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.modal-content button:hover {
+    background-color: #f8f8f8;
+}
+
+.modal-content button[type="submit"] {
+    background-color: #28a745;
+    color: white;
+}
+
+.modal-content button[type="button"] {
+    background-color: #6c757d;
+    color: white;
+}
