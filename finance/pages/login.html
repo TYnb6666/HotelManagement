@@ -58,7 +58,22 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             // 这里可以添加登录验证逻辑
-            document.getElementById('optionsModal').classList.add('show');
+            const inputUsername = document.getElementById('username').value;
+            const inputPassword =document.getElementById('password').value;
+
+            fetch('../data/account.json').then(response=>response.json()).then(accounts=>{
+                const accountDict = {};
+                for (const account of accounts){
+                    accountDict[account.username] = account.password;
+                }
+
+                if (accountDict[inputUsername] && accountDict[inputUsername] === inputPassword) {
+                // verification succeed
+                document.getElementById('optionsModal').classList.add('show');
+            } else {
+                alert('Incorrect username or password.');
+            }
+            })
         });
 
         function selectOption(role) {
@@ -66,7 +81,7 @@
             console.log('Selected role:', role);
             switch(role) {
                 case 'dining':
-                    window.location.href = '#餐饮后台';
+                    window.location.href = '../../dine/Background/index.html';
                     break;
                 case 'residence':
                     window.location.href = '#酒店后台';

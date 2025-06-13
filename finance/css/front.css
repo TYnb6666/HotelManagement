@@ -17,9 +17,9 @@ body {
     background-color: #D6CDB9;
 }
 
-.container {
-    margin: 90px 18px 18px 18px;
-}
+/*.container {*/
+/*    margin: 90px 18px 18px 18px;*/
+/*}*/
 
 header {
     z-index: 1000;
@@ -46,7 +46,7 @@ header {
     flex: 0 0 auto;
     display: flex;
     justify-content: center;
-    align-items: center;
+    /*align-items: center;*/
 }
 
 .logo img {
@@ -55,14 +55,11 @@ header {
 }
 
 .hotel-info, .header-right {
-    display: flex;
-    flex-direction: column;
     gap: 2px;
     min-width: 140px;
 }
 
 .header-right {
-    align-items: flex-end;
     text-align: right;
 }
 
@@ -124,25 +121,21 @@ header {
 .main-image-section {
     position: relative;
     max-width: 100%;
-    margin: 32px 0 0 0;
+    margin: 18px 0 0 0;
 }
 
 .main-image {
     width: 100%;
     max-height: 480px;
     object-fit: cover;
-    display: block;
     filter: brightness(0.92);
 }
 
 .row-images {
     display: flex;
-    justify-content: center;
-    align-items: stretch;
     width: 100%;
     margin: 32px auto 0 auto;
     gap: 18px;
-    position: static;
     box-shadow: none;
     background: none;
     border-radius: 0;
@@ -151,7 +144,6 @@ header {
 
 .column {
     display: flex;
-    align-items: center;
     justify-content: center;
     background: none;
     margin: 0;
@@ -160,13 +152,11 @@ header {
 
 .image-block-left {
     flex: 1;
-    max-width: 33%;
     position: relative;
 }
 
 .image-block-right {
     flex: 2;
-    max-width: 67%;
     position: relative;
 }
 
@@ -178,19 +168,9 @@ header {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
-.main-image-block img.main-image {
-    width: 100%;
-    height: 340px;
-    object-fit: cover;
-    display: block;
-    border-radius: 8px;
-    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
-}
-
 .main-title {
     position: absolute;
-    left: 0;
-    right: 0;
+    width: 100%;
     top: 50%;
     transform: translateY(-50%);
     text-align: center;
@@ -261,7 +241,7 @@ header {
     width: 100%;
     font-family: 'Times New Roman', Times, serif;
     font-size: 1.3rem;
-    background-image: -webkit-linear-gradient(transparent, #242424);
+    background-image: linear-gradient(transparent, #242424);
     color: #fff;
     padding: 15px 18px 12px 18px;
     text-align: left;
@@ -272,7 +252,7 @@ header {
 
 .main-content {
     margin-top: 120px;
-    padding-bottom: 48px;
+    padding-bottom: 36px;
 }
 
 .footer-section {
@@ -285,9 +265,7 @@ header {
 .footer-main {
     display: flex;
     justify-content: center;
-    align-items: flex-start;
     max-width: 1400px;
-    margin: 0 auto;
     gap: 48px;
     padding: 0 32px;
 }
@@ -298,13 +276,11 @@ header {
     max-width: 480px;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
     gap: 18px;
 }
 
 .footer-logo {
     align-items: center;
-    justify-content: flex-start;
 }
 
 .footer-logo-img {
@@ -316,20 +292,19 @@ header {
     color: var(--main-green);;
     font-size: 1.25rem;
     font-weight: bold;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
     letter-spacing: 1px;
 }
 
 .footer-text {
     font-size: 1.05rem;
-    line-height: 2;
+    line-height: 1.6; /*height of a line*/
     color: #6b655c;
 }
 
 .footer-contact-item {
     font-size: 1.05rem;
     margin-bottom: 4px;
-    display: flex;
     align-items: center;
     gap: 6px;
 }
@@ -339,7 +314,7 @@ header {
     color: #fff;
     text-align: center;
     font-size: 1.1rem;
-    padding: 16px 0 8px 0;
+    padding: 12px 0 8px 0;
     margin-top: 36px;
     letter-spacing: 1px;
 }
@@ -351,16 +326,15 @@ header {
 
 .grid-container {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 1fr); /*Repeat three times, with each width being 1fr*/
     gap: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 24px 24px 24px 24px;
-    box-sizing: border-box;
+    padding: 24px;
+    box-sizing: border-box; /*Strictly limit the total width to no more than 1200px*/
 }
 
 .grid-container a {
-    display: block;
     position: relative;
     text-decoration: none;
 }
@@ -372,21 +346,19 @@ header {
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
     margin-bottom: 0;
-    display: block;
 }
 
 .grid-container .img-title {
     position: absolute;
     left: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.45);
+    background-image: linear-gradient(transparent, #242424);
     color: #fff;
     font-size: 1.1rem;
     padding: 10px 18px 8px 18px;
     border-radius: 0 0 12px 12px;
     text-align: left;
     width: 100%;
-    box-sizing: border-box;
     z-index: 2;
     text-shadow: 0 1px 2px rgba(0,0,0,0.25);
 }
@@ -509,15 +481,26 @@ header {
         gap: 12px;
         padding: 12px;
     }
+    .header-bar .hotel-info,
+    .header-bar .header-right {
+        display: none;
+    }
+
+    .header-bar .logo{
+        margin: 0 auto;
+    }
 
     .main-image {
         max-height: 180px;
+    }
+    .more-btn{
+        margin-bottom: 20px;
     }
 
     .row-images {
         flex-direction: column;
         width: 96%;
-        gap: 10px;
+        gap: 30px;
     }
 
     .image-block-left, .image-block-right {
@@ -526,7 +509,7 @@ header {
 
     .image-block-left img,
     .image-block-right img {
-        height: 100px;
+        height: 350px;
     }
 
     .main-image-half {
@@ -556,6 +539,7 @@ header {
 
     .footer-logo-img {
         width: 120px;
+        margin: 0 auto;
     }
 
     .login-box {
