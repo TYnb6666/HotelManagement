@@ -1,3 +1,4 @@
+// ensure HTML element (e.g <tbody>) has loaded
 document.addEventListener("DOMContentLoaded", function () {
     fetch("../data/data.json") // fetch JSON data
         .then(response => response.json()) // parse to JSON format
@@ -49,14 +50,16 @@ document.addEventListener("DOMContentLoaded", function () {
             const targetDate = "2025-04-05";
 
             // add tag，income type "income"，expense type "expense"
+            //transactions: merge income and expenses to a new array 'transactions'
             const transactions = [
-                ...data.income.map(item => ({...item, type: "income"})),
+                ...data.income.map(item => ({...item, type: "income"})), // ...item: copy all the attributes
                 ...data.expenses.map(item => ({...item, type: "expense"}))
             ];
 
             const filtered = transactions.filter(item => item.date === targetDate);
 
             filtered.forEach(item => {
+                // insert a new <tr>
                 const row = financeTable.insertRow();
                 row.insertCell(0).textContent = item.date;
                 row.insertCell(1).textContent = item.category;
