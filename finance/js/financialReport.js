@@ -5,7 +5,8 @@ let echartsInstances = {}; // Store ECharts instances for resize
 function initChart(id, option) {
     const chartDom = document.getElementById(id);
     if (chartDom) {
-        let chart = echarts.getInstanceByDom(chartDom); // Check if instance already exists
+        // Check if instance already exists, if yes, pass the chart object to chart
+        let chart = echarts.getInstanceByDom(chartDom);
         if (!chart) { // If not, init new one
             chart = echarts.init(chartDom);
         }
@@ -27,20 +28,13 @@ window.addEventListener('resize', function() {
 
 // Fetch data once and then initialize
 document.addEventListener('DOMContentLoaded', function() {
-    // Ensure ECharts is loaded before fetching data and initializing page
-    if (typeof echarts === 'undefined') {
-        console.error('ECharts library is not loaded. Make sure to include it before this script.');
-        return;
-    }
-
     fetch('../data/data.json')
         .then(response => {
-            return response.text();
+            return response.json();
         })
-        .then(text => {
-            const jsonData = JSON.parse(text.startsWith('\uFEFF') ? text.substring(1) : text);
-            incomeData = jsonData.income || []; // Ensure array even if data is missing
-            expenseData = jsonData.expenses || []; // Ensure array even if data is missing
+        .then(jsonData => {
+            incomeData = jsonData.income;
+            expenseData = jsonData.expenses;
             initializePage();
         })
         .catch(error => console.error('Error loading financial data:', error));
@@ -74,7 +68,7 @@ function updateChartsAndOverview(month) {
     let totalIncome = monthlyIncome.reduce((sum, item) => sum + item.amount, 0);
     let totalExpenses = monthlyExpenses.reduce((sum, item) => sum + item.amount, 0);
     let totalProfit = totalIncome - totalExpenses;
-    let profitRate = totalIncome ? (totalProfit / totalIncome * 100) : 0;
+    let profitRate = (totalProfit / totalIncome * 100);
 
     document.getElementById('totalIncome').textContent = totalIncome.toFixed(2);
     document.getElementById('totalExpenses').textContent = totalExpenses.toFixed(2);
@@ -82,12 +76,12 @@ function updateChartsAndOverview(month) {
     document.getElementById('profitRate').textContent = profitRate.toFixed(2);
 
     drawIncomeExpenseTrend(monthlyIncome, monthlyExpenses);
-    drawProfitTrend(); // Profit trend now uses all historical data
+    drawProfitTrend(); // Profit trend uses all historical data
     drawMonthComparison(month, incomeData, expenseData); // Pass full data for prev month calculation
 }
 
 function drawIncomeExpenseTrend(monthlyIncome, monthlyExpenses) {
-    const dailyAggregated = {};
+    const dailyAggregated = {};  // key (day) : value (income:100, expense:100)
     
     monthlyIncome.forEach(item => {
         const day = item.date.substring(0, 10);
@@ -101,7 +95,9 @@ function drawIncomeExpenseTrend(monthlyIncome, monthlyExpenses) {
     });
 
     const sortedDays = Object.keys(dailyAggregated).sort();
+    //income series : [100, 200, 100, 110, ...]
     const incomeSeries = sortedDays.map(day => dailyAggregated[day].income);
+    //expenses series: [200, 100,...]
     const expenseSeries = sortedDays.map(day => dailyAggregated[day].expense);
 
     const isMobile = window.innerWidth <= 768;
@@ -110,33 +106,33 @@ function drawIncomeExpenseTrend(monthlyIncome, monthlyExpenses) {
         title: { 
             text: 'Income vs Expenses Trend (Daily in Selected Month)', 
             left: 'center', 
-            textStyle: { fontSize: isMobile ? 14 : 16 } // 手机端标题小一点
+            textStyle: { fontSize: isMobile ? 14 : 16 } // smaller title for mobile
         },
         tooltip: { trigger: 'axis' },
         legend: { 
             data: ['Income', 'Expenses'], 
-            top: isMobile ? 40 : 30, // 手机端图例位置可能需要调整
-            left: 'center', // 图例居中
-            type: isMobile ? 'scroll' : 'plain', // 手机端图例多的话可以滚动
-            itemGap: isMobile ? 5 : 10, // 手机端图例项间距小一点
-            textStyle: { fontSize: isMobile ? 10 : 12 } // 手机端图例文字小一点
+            top: isMobile ? 40 : 30,
+            left: 'center', // legend in center
+            type: isMobile ? 'scroll' : 'plain', // If there are many legends on the mobile phone, user can scroll
+            itemGap: isMobile ? 5 : 10, // smaller gap for mobile
+            textStyle: { fontSize: isMobile ? 10 : 12 } // smaller font for mobile
         },
         grid: {
             left: '3%',
             right: '4%',
-            bottom: isMobile ? '15%' : '3%', // 手机端底部留更多空间给图例或x轴标签
-            top: isMobile ? '25%' : '20%', // 手机端顶部留更多空间给标题和图例
+            bottom: isMobile ? '15%' : '3%', // more bottom for legend/x axis label in mobile
+            top: isMobile ? '25%' : '20%',
             containLabel: true
         },
         xAxis: { 
             type: 'category', 
             data: sortedDays, 
             boundaryGap: false,
-            axisLabel: { fontSize: isMobile ? 10 : 12 } // 手机端x轴标签小一点
+            axisLabel: { fontSize: isMobile ? 10 : 12 }
         },
         yAxis: { 
             type: 'value',
-            axisLabel: { fontSize: isMobile ? 10 : 12 } // 手机端y轴标签小一点
+            axisLabel: { fontSize: isMobile ? 10 : 12 }
          },
         series: [
             { name: 'Income', type: 'line', smooth: true, data: incomeSeries, itemStyle: { color: '#67C23A' } },
@@ -148,22 +144,26 @@ function drawIncomeExpenseTrend(monthlyIncome, monthlyExpenses) {
 
 function drawProfitTrend() {
     const monthlyProfits = {};
+    // ... is spread operator, merge incomeData and expenseData to a new array
     [...incomeData, ...expenseData].forEach(item => {
         const month = item.date.substring(0, 7);
         if (!monthlyProfits[month]) monthlyProfits[month] = { income: 0, expense: 0 };
-        if (item.type === 'income' || incomeData.includes(item)) { // crude type check
+        if (item.type === 'income' || incomeData.includes(item)) { // check item belongs to income/expense
             monthlyProfits[month].income += item.amount;
         } else if (item.type === 'expense' || expenseData.includes(item)) {
             monthlyProfits[month].expense += item.amount;
         }
     });
 
+    // calculate monthly profit
     const calculatedMonthlyProfits = {};
     for(const monthKey in monthlyProfits) {
         calculatedMonthlyProfits[monthKey] = monthlyProfits[monthKey].income - monthlyProfits[monthKey].expense;
     }
         
     const sortedMonths = Object.keys(calculatedMonthlyProfits).sort();
+
+    //prepare data for echart drawing
     const profitSeries = sortedMonths.map(month => calculatedMonthlyProfits[month]);
 
     const isMobile = window.innerWidth <= 768;
@@ -172,7 +172,7 @@ function drawProfitTrend() {
         title: { 
             text: 'Monthly Profit Trend (All Time)', 
             left: 'center', 
-            textStyle: { fontSize: isMobile ? 14 : 16 } // 手机端标题小一点
+            textStyle: { fontSize: isMobile ? 14 : 16 }
         },
         tooltip: { trigger: 'axis' },
         grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
@@ -184,13 +184,17 @@ function drawProfitTrend() {
 }
 
 function drawMonthComparison(currentMonth, fullIncomeData, fullExpenseData) {
+    //derive year and month
     const currentYear = parseInt(currentMonth.substring(0, 4));
     const currentM = parseInt(currentMonth.substring(5, 7));
-    
+
+    // month in JS start from zero
     const prevMDate = new Date(currentYear, currentM - 2, 1);
+    // .slice(-2) is to get the last two digit. e.g, '05' is '05', '012' is '12'
     const prevMonthStr = prevMDate.getFullYear() + '-' + ('0' + (prevMDate.getMonth() + 1)).slice(-2);
 
     let currentMonthProfit = 0;
+    // for income, profit is +money; for expenses, profit is -money
     fullIncomeData.filter(i => i.date && i.date.startsWith(currentMonth)).forEach(i => currentMonthProfit += i.amount);
     fullExpenseData.filter(e => e.date && e.date.startsWith(currentMonth)).forEach(e => currentMonthProfit -= e.amount);
 
@@ -204,7 +208,7 @@ function drawMonthComparison(currentMonth, fullIncomeData, fullExpenseData) {
         title: { 
             text: `Profit Comparison: ${currentMonth} vs ${prevMonthStr}`, 
             left: 'center', 
-            textStyle: { fontSize: isMobile ? 14 : 16 } // 手机端标题小一点
+            textStyle: { fontSize: isMobile ? 14 : 16 }
         },
         tooltip: { trigger: 'item' }, // trigger: 'axis' might be better for bar charts with x-axis category
         grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
@@ -221,27 +225,4 @@ function drawMonthComparison(currentMonth, fullIncomeData, fullExpenseData) {
         }]
     };
     initChart('compareChart', option);
-}
-
-function getUniqueMonths() {
-    const months = new Set();
-    [...incomeData, ...expenseData].forEach(item => {
-        months.add(item.date.slice(0, 7));
-    });
-    return Array.from(months).sort();
-}
-
-function sumByMonth(data, month) {
-    return data.filter(item => item.date.startsWith(month))
-        .reduce((sum, item) => sum + item.amount, 0);
-}
-
-function getPreviousMonth(month) {
-    const [year, m] = month.split('-').map(Number);
-    let prevYear = year, prevMonth = m - 1;
-    if (prevMonth === 0) {
-        prevYear -= 1;
-        prevMonth = 12;
-    }
-    return `${prevYear}-${String(prevMonth).padStart(2, '0')}`;
 }
