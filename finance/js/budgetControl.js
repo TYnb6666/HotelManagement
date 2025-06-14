@@ -1,4 +1,5 @@
 // default goal and budget (read from local storage first)
+// parse json string to object
 let businessGoals = JSON.parse(localStorage.getItem('incomeGoals')) || {
   "Hotel": 30000,
   "Restaurant": 30000,
@@ -22,14 +23,14 @@ const expenseTableBody = document.getElementById('expense-table');
 
 // load data
 fetch('../data/data.json')
-    .then(response => response.json())
+    .then(response => response.json())// transfer response object to js object
     .then(data => {
         const incomeData = data.income;
         const expensesData = data.expenses;
 
-        // calculate income
+        // calculate income: for each entry in incomeData
         incomeData.forEach(entry => {
-            if (!businessCurrent[entry.category]) {
+            if (!businessCurrent[entry.category]) { // "category": "Hotel"
                 businessCurrent[entry.category] = 0;
             }
             businessCurrent[entry.category] += entry.amount;
@@ -53,14 +54,17 @@ fetch('../data/data.json')
 
 // render income table
 function renderIncomeTable() {
-    incomeTableBody.innerHTML = '';
+    incomeTableBody.innerHTML = ''; //clear previous table date
     Object.keys(businessGoals).forEach(category => {
+        //  create a new row
         const row = document.createElement('tr');
 
+        //  create a new cell for category
         const nameCell = document.createElement('td');
-        nameCell.textContent = category;
-        row.appendChild(nameCell);
+        nameCell.textContent = category;  // adding element's text content
+        row.appendChild(nameCell);  //append <td> into <tr>
 
+        // create business goal
         const targetCell = document.createElement('td');
         targetCell.textContent = businessGoals[category];
         row.appendChild(targetCell);
@@ -77,10 +81,10 @@ function renderIncomeTable() {
         const fill = document.createElement('div');
         fill.className = 'progress-fill';
 
-        const percentage = Math.min((current / businessGoals[category]) * 100, 100);
-        fill.style.width = percentage + '%';
+        const percentage = Math.min((current / businessGoals[category]) * 100, 100); // more than 100%
+        fill.style.width = percentage + '%';  // set progress length
         fill.style.backgroundColor = percentage >= 100 ? 'blue' : 'green';
-        fill.textContent = Math.round(percentage) + '%'; // 加上百分比文字 add percentage text
+        fill.textContent = Math.round(percentage) + '%'; // round to inetger
         fill.style.textAlign = 'center';
         fill.style.color = 'white';
         fill.style.fontSize = '12px';
@@ -124,7 +128,7 @@ function renderExpenseTable() {
         const percentage = Math.min((current / expenseBudget[category]) * 100, 100);
         fill.style.width = percentage + '%';
         fill.style.backgroundColor = percentage >= 100 ? 'red' : 'green';
-        fill.textContent = Math.round(percentage) + '%'; // percentage format
+        fill.textContent = Math.round(percentage) + '%';
         fill.style.textAlign = 'center';
         fill.style.color = 'white';
         fill.style.fontSize = '12px';
@@ -139,6 +143,7 @@ function renderExpenseTable() {
 }
 
 // modify income
+// firstly copy current value to Modal
 document.getElementById('modifyIncomeBtn').onclick = () => {
     document.getElementById('hotelInput').value = businessGoals["Hotel"];
     document.getElementById('restaurantInput').value = businessGoals["Restaurant"];
@@ -146,12 +151,14 @@ document.getElementById('modifyIncomeBtn').onclick = () => {
     document.getElementById('incomeModal').style.display = 'block';
 };
 
+// write new value to businessGoals and update localStorage
 document.getElementById('confirmIncomeBtn').onclick = () => {
     businessGoals["Hotel"] = parseFloat(document.getElementById('hotelInput').value);
     businessGoals["Restaurant"] = parseFloat(document.getElementById('restaurantInput').value);
     businessGoals["Entertainment"] = parseFloat(document.getElementById('entertainmentInput').value);
     localStorage.setItem('incomeGoals', JSON.stringify(businessGoals)); //save to local storage
     document.getElementById('incomeModal').style.display = 'none';
+    //update table and render chart
     renderIncomeTable();
     calculateProfitAndRenderChart();
 };
@@ -190,6 +197,7 @@ function initOrUpdateProfitChart(profitGoal, actualProfit) {
 
     if (!profitChartInstance) {
         profitChartInstance = echarts.init(chartDom);
+        // automatically adjust chart size
         window.addEventListener('resize', function() {
             if (profitChartInstance) {
                 profitChartInstance.resize();
@@ -203,6 +211,7 @@ function initOrUpdateProfitChart(profitGoal, actualProfit) {
             left: 'center',
             textStyle: { fontSize: 16 }
         },
+        //prompting when hover
         tooltip: {
             trigger: 'axis',
             axisPointer: { type: 'shadow' }
@@ -211,6 +220,7 @@ function initOrUpdateProfitChart(profitGoal, actualProfit) {
             data: ['Profit Goal', 'Actual Profit'],
             top: 30
         },
+        // position
         grid: {
             left: '3%',
             right: '4%',
@@ -242,7 +252,7 @@ function initOrUpdateProfitChart(profitGoal, actualProfit) {
             }
         ]
     };
-    profitChartInstance.setOption(option, true);
+    profitChartInstance.setOption(option, true); //true: Force all updates
 }
 
 function calculateProfitAndRenderChart() {
@@ -250,6 +260,7 @@ function calculateProfitAndRenderChart() {
     const expenseBudget = JSON.parse(localStorage.getItem('expenseGoals'));
     
     // Calculate total current income from businessCurrent
+    // callback function to accumulate all income, Array.reduce(callback, initialValue)
     const currentIncome = Object.values(businessCurrent).reduce((sum, value) => sum + value, 0);
     
     // Calculate total current expenses from expenseCurrent
@@ -271,8 +282,6 @@ function calculateProfitAndRenderChart() {
     initOrUpdateProfitChart(profitGoal, actualProfit);
 }
 
-// Assuming other functions like renderIncomeTable, renderExpenseTable, etc., exist
-// and that they might call calculateProfitAndRenderChart() after data modification.
 
 // Initial call when the page and its ECharts script are ready
 document.addEventListener('DOMContentLoaded', function() {
@@ -283,5 +292,3 @@ document.addEventListener('DOMContentLoaded', function() {
     calculateProfitAndRenderChart(); 
 
 });
-
-// Make sure your other functions like renderExpenseTable, etc. call calculateProfitAndRenderChart() after data changes.
