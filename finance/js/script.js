@@ -39,7 +39,8 @@ function initializeUIComponents() {
     toggleBtn.addEventListener('click', function () {
         sidebar.classList.toggle('hidden'); // if have 'hidden' then remove, if not have then append
         if (content) {
-            content.classList.toggle('full', sidebar.classList.contains('hidden')); // 'hidden' True=>append full;'hidden' False=>remove full
+            // 'hidden' True=>append full;'hidden' False=>remove full
+            content.classList.toggle('full', sidebar.classList.contains('hidden'));
         }
     });
 
@@ -47,38 +48,38 @@ function initializeUIComponents() {
     const dropdowns = document.querySelectorAll('.sidebar .dropdown'); // Search limited to within the sidebar
     dropdowns.forEach(dropdown => {
         const dropdownLink = dropdown.querySelector('a');
+        // find submenu needed to be collapsed
         const submenu = dropdown.querySelector('.submenu');
 
         if (submenu && dropdownLink) {
-            submenu.style.display = 'none'; // Initial hiding
+            submenu.style.display = 'none'; // hiding in initialization
 
             dropdownLink.addEventListener('click', function () {
+                //block => visible
                 const isVisible = submenu.style.display === 'block';
 
                 // click submenu，collapse or expend
-                submenu.style.display = isVisible ? 'none' : 'block';  // lay out vertically
+                submenu.style.display = isVisible ? 'none' : 'block';
             });
         }
     });
 
-    // 3. Mobile responsive adjustment
+    // Mobile responsive adjustment
     function checkMobile() {
-        if (!content) return; // if content not exist，terminate
-
+        // ensure for mobile, default collapse the sidebar
         if (sidebar.classList.contains('hidden')) {
             content.classList.add('full');
         } else {
             if (window.innerWidth > 768) { // for PC, remove 'full' class
                 content.classList.remove('full');
             } else {
-                content.classList.add('full'); // when mobile sidebar visible，content is full
+                //no matter whether sidebar is expanded for mobile, content would not shrink
+                content.classList.add('full');
             }
         }
     }
 
     window.addEventListener('resize', checkMobile); //adjust layout when window size changes
-    // Initial check to ensure that the content class is correct
-    // This will correctly set the content class after it is hidden by default on the mobile phone end and during the initial loading on the desktop end
     checkMobile();
 }
 

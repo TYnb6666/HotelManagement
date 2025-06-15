@@ -24,6 +24,7 @@ function renderTaxDetails() {
         const consumption = item.amount * CONSUMPTION_RATE;
         const incomeTax = item.amount * INCOME_TAX_RATE;
 
+        //accumulate every item's tax respectively
         vatTotal += vat;
         consumptionTotal += consumption;
         incomeTaxTotal += incomeTax;
@@ -49,7 +50,7 @@ function renderTaxDetails() {
       </tr>`;
     });
 
-    // update overview
+    // update overview (card)
     document.getElementById('vatTax').textContent = vatTotal.toFixed(2);
     document.getElementById('consumptionTax').textContent = consumptionTotal.toFixed(2);
     document.getElementById('incomeTax').textContent = incomeTaxTotal.toFixed(2);
