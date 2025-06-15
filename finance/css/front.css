@@ -153,11 +153,13 @@ header {
 .image-block-left {
     flex: 1;
     position: relative;
+    overflow: hidden;
 }
 
 .image-block-right {
     flex: 2;
     position: relative;
+    overflow: hidden;
 }
 
 .image-block-left img,
@@ -166,6 +168,12 @@ header {
     height: 480px;
     object-fit: cover;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+}
+
+#cook-img:hover, #food-img:hover {
+    scale: 1.1;
+    transition: scale 0.3s;
 }
 
 .main-title {
@@ -344,7 +352,7 @@ header {
     height: 220px;
     object-fit: cover;
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     margin-bottom: 0;
 }
 
@@ -360,7 +368,7 @@ header {
     text-align: left;
     width: 100%;
     z-index: 2;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
 }
 
 .login-container {
@@ -475,25 +483,27 @@ header {
 }
 
 @media (max-width: 900px) {
-        .header-bar, .header-main {
+    .header-bar, .header-main {
         flex-direction: column;
         align-items: flex-start;
         gap: 12px;
         padding: 12px;
     }
+
     .header-bar .hotel-info,
     .header-bar .header-right {
         display: none;
     }
 
-    .header-bar .logo{
+    .header-bar .logo {
         margin: 0 auto;
     }
 
     .main-image {
         max-height: 180px;
     }
-    .more-btn{
+
+    .more-btn {
         margin-bottom: 20px;
     }
 
@@ -525,6 +535,7 @@ header {
         background: rgba(255, 255, 255, 0.7);
         padding: 12px 0 0 0;
     }
+
     .footer-main {
         flex-direction: column;
         gap: 24px;
@@ -652,25 +663,4 @@ header {
 
 .option-btn i {
     font-size: 24px;
-}
-
-@media (max-width: 900px) {
-    .modal-content {
-        width: 85%;
-        padding: 20px;
-    }
-
-    .modal-options {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-
-    .option-btn {
-        padding: 12px 15px;
-        font-size: 14px;
-    }
-
-    .modal-header h3 {
-        font-size: 20px;
-    }
 }
